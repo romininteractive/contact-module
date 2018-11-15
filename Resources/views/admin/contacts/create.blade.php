@@ -65,4 +65,50 @@
             });
         });
     </script>
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $("#name").keyup(function () {
+                var value = $(this).val();
+                $("#sname").val(value);
+            });
+            $("#address").keyup(function () {
+                var value = $(this).val();
+                $("#saddress").val(value);
+            });
+            $("#city").keyup(function () {
+                var value = $(this).val();
+                $("#scity").val(value);
+            });
+            $("#state").keyup(function () {
+                var value = $(this).val();
+                $("#sstate").val(value);
+            });
+            $("#zip_code").keyup(function () {
+                var value = $(this).val();
+                $("#szip_code").val(value);
+            });
+            $("#country").keyup(function () {
+                var value = $(this).val();
+                $("#scountry").val(value);
+            });
+            $("#fax").keyup(function () {
+                var value = $(this).val();
+                $("#sfax").val(value);
+            });
+            $("#billingphone").keyup(function () {
+                var value = $(this).val();
+                $("#sbillingphone").val(value);
+            });
+        });
+
+         function isNumber(evt) {
+                evt = (evt) ? evt : window.event;
+                var charCode = (evt.which) ? evt.which : evt.keyCode;
+                if (charCode > 31 && (charCode < 48 || charCode > 57)) {
+                    return false;
+                }
+                return true;
+            }
+    </script>
 @endpush

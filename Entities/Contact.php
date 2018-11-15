@@ -11,7 +11,6 @@ use Modules\Estimate\Entities\Estimate;
 use Modules\Newnotification\Entities\Newnotification;
 use Modules\Purchases\Entities\Purchases;
 use Modules\Reminder\Entities\Reminder;
-use Notifications\ContactInterface;
 
 class Contact extends Model implements ContactInterface
 {

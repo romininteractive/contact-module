@@ -48,9 +48,9 @@ class ContactController extends AdminBaseController
     public function create()
     {
         $contact_type = config('asgard.contact.contact-type');
-        $salutation = config('asgard.core.user-salution');        
+        $salutation = config('asgard.contact.user-salutation');        
 
-        $user_salution = Collect($salutation);
+        $user_salution = collect($salutation);
         return view('contact::admin.contacts.create', compact('contact_type','user_salution'));
     }
 
