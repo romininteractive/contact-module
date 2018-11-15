@@ -2,21 +2,34 @@
 	<div class="row">
 		 <fieldset>
     <legend>General Detail:</legend>
-  <div class="col-sm-6">
- {!! Form::normalSelect('salutation','Salutation',$errors,['','Mr.','Mrs.','Ms.','MISS','Dr.']) !!}
- {!! Form::normalInput('last_name', 'Last Name', $errors,$contact) !!}
-  {!! Form::normalInput('email', 'Email Address', $errors,$contact) !!}
-   {!! Form::normalInput('department', 'Department', $errors,$contact) !!}
 
-
-  </div>
-   <div class="col-sm-6">
-   {!! Form::normalInput('first_name', 'First Name', $errors,$contact) !!}
-    {!! Form::normalInput('company_name', 'Company Name', $errors,$contact) !!}
-    {!! Form::normalInput('designation', 'Designation', $errors,$contact) !!}
-    {!! Form::normalInput('phone', 'Phone Number', $errors,$contact) !!}
-     {!! Form::normalInput('gstin', 'GSTIN', $errors,$contact) !!}
-   </div>
+      <div class="form-group col-sm-4">
+          {!! Form::label('Type', 'Contact Type:') !!}&nbsp;&nbsp;&nbsp;
+              @foreach ($contact_type as $k => $type)
+                   <label class="radio-inline">
+                      <input {{($type['value'] == $contact->user_type)?'checked':'' }} name="user_type" type="radio" value="{{$type['value']}}">                          
+                        {!! $type['text'] !!}
+                  </label>
+              @endforeach
+      </div>
+            <div class="clearfix"></div>
+      <div class="col-sm-4">
+            {!! Form::label('Salutation', 'Salutation') !!}
+          {!! Form::select('salutation', $user_salution, $contact->salutation, ['class' => 'form-control'] ) !!}                        <br>
+         <!-- {!! Form::normalSelect('salutation','Salutation',$errors,['','Mr.','Mrs.','Ms.','MISS','Dr.']) !!} -->
+         {!! Form::normalInput('email', 'Email Address', $errors,$contact) !!}
+         {!! Form::normalInput('company_name', 'Company Name', $errors,$contact) !!}
+      </div>
+      <div class="col-sm-4">
+        {!! Form::normalInput('first_name', 'First Name', $errors,$contact) !!}
+        {!! Form::normalInput('phone', 'Phone Number', $errors,$contact, ['class' => 'form-control','maxlength' => 10, 'onkeypress' => 'return isNumber(event)']) !!}
+        {!! Form::normalInput('department', 'Department', $errors,$contact) !!}
+      </div>
+      <div class="col-sm-4">
+       {!! Form::normalInput('last_name', 'Last Name', $errors,$contact) !!}
+       {!! Form::normalInput('gstin', 'GSTIN', $errors,$contact) !!}
+       {!! Form::normalInput('designation', 'Designation', $errors,$contact) !!}
+      </div>      
 </fieldset>
 </div>
 
@@ -27,27 +40,55 @@
   	  <fieldset>
     <legend>Billing Detail:</legend>
 
-  	{!! Form::normalInput('name', 'Name', $errors,$conatctAddress) !!}
-    	 {!! Form::normalInput('address', 'Address', $errors,$conatctAddress) !!}
-    	 {!! Form::normalInput('city', 'City', $errors,$conatctAddress) !!}
-    	 {!! Form::normalInput('state', 'State', $errors,$conatctAddress) !!}
-    	 {!! Form::normalInput('zip_code', 'Zip Code', $errors,$conatctAddress) !!}
-    	 {!! Form::normalInput('coutry', 'Courtry', $errors,$conatctAddress) !!}
-    	        {!! Form::normalInput('fax', 'Fax', $errors,$conatctAddress) !!}
-    	         {!! Form::normalInput('billingphone', 'Phone', $errors,$conatctAddress) !!}
+  	{!! Form::normalInput('name', 'Name', $errors,$billingConatctAddress) !!}
+    	 {!! Form::normalInput('address', 'Address', $errors,$billingConatctAddress) !!}
+    	 {!! Form::normalInput('city', 'City', $errors,$billingConatctAddress) !!}
+    	 {!! Form::normalInput('state', 'State', $errors,$billingConatctAddress) !!}
+    	 {!! Form::normalInput('zip_code', 'Zip Code', $errors,$billingConatctAddress, ['class' => 'form-control','maxlength' => 6, 'onkeypress' => 'return isNumber(event)']) !!}
+    	 {!! Form::normalInput('country', 'Country', $errors,$billingConatctAddress) !!}
+    	        {!! Form::normalInput('fax', 'Fax', $errors,$billingConatctAddress) !!}
+    	         {!! Form::normalInput('billingphone', 'Phone', $errors,$billingConatctAddress, ['class' => 'form-control','maxlength' => 10, 'onkeypress' => 'return isNumber(event)']) !!}
     	     </fieldset>
     	     </div>
   <div class="col-sm-6">
   	  <fieldset>
     <legend>Shipping Detail:</legend>
-  	{!! Form::normalInput('sname', 'Name', $errors,$conatctAddress) !!}
-    	     {!! Form::normalInput('saddress', 'Address', $errors,$conatctAddress) !!}
-    	     {!! Form::normalInput('scity', 'City1', $errors,$conatctAddress) !!}
-    	     {!! Form::normalInput('sstate', 'State', $errors,$conatctAddress) !!}
-    	      {!! Form::normalInput('szip_code', 'Zip Code', $errors,$conatctAddress) !!}
-    	    	 {!! Form::normalInput('scoutry', 'Coutry', $errors,$conatctAddress) !!}
-    	    	  {!! Form::normalInput('sfax', 'Fax', $errors,$conatctAddress) !!}
-    	    	   {!! Form::normalInput('sbillingphone', 'Phone', $errors,$conatctAddress) !!}
+    <div class="form-group">
+          {!! Form::label('Name', 'Name') !!}
+          {!! Form::text('sname', $shippingConatctAddress->name, ['class' => 'form-control', 'required']) !!}
+  	<!-- {!! Form::normalInput('name', 'Name', $errors,$shippingConatctAddress) !!} -->
+    </div>
+    <div class="form-group">
+          {!! Form::label('Address', 'Address') !!}
+    	    {!! Form::text('saddress', $shippingConatctAddress->address, ['class' => 'form-control', 'required']) !!}
+    </div>
+    <div class="form-group">
+          {!! Form::label('City', 'City') !!}
+          {!! Form::text('scity', $shippingConatctAddress->city, ['class' => 'form-control']) !!}
+    <!-- {!! Form::normalInput('name', 'Name', $errors,$shippingConatctAddress) !!} -->
+    </div>         
+    <div class="form-group">
+          {!! Form::label('State', 'State') !!}
+          {!! Form::text('sstate', $shippingConatctAddress->state, ['class' => 'form-control']) !!}
+    	     <!-- {!! Form::normalInput('scity', 'City1', $errors,$shippingConatctAddress) !!} -->
+    </div>             
+    <div class="form-group">
+          {!! Form::label('ZIP Code', 'ZIP Code') !!}
+          {!! Form::text('szip_code', $shippingConatctAddress->zip_code, ['class' => 'form-control','maxlength' => 6, 'onkeypress' => 'return isNumber(event)']) !!}
+    	     <!-- {!! Form::normalInput('sstate', 'State', $errors,$shippingConatctAddress) !!} -->
+    </div>
+    <div class="form-group">
+          {!! Form::label('Country', 'Country') !!}
+          {!! Form::text('scountry', $shippingConatctAddress->country, ['class' => 'form-control']) !!}
+    </div>
+    <div class="form-group">
+          {!! Form::label('Fax', 'Fax') !!}
+          {!! Form::text('sfax', $shippingConatctAddress->fax, ['class' => 'form-control']) !!}
+    </div>                         
+    <div class="form-group">
+          {!! Form::label('Phone', 'Phone') !!}
+          {!! Form::text('sbillingphone', $shippingConatctAddress->billingphone, ['class' => 'form-control','maxlength' => 10, 'onkeypress' => 'return isNumber(event)']) !!}
+    </div>                             
     	    	</fieldset>
     	    	</div>
 
@@ -85,9 +126,9 @@
             });
         });
          $(document).ready(function () {
-            $("#coutry").keyup(function () {
+            $("#country").keyup(function () {
                 var value = $(this).val();
-                $("#scoutry").val(value);
+                $("#scountry").val(value);
             });
         });
          $(document).ready(function () {

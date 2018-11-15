@@ -11,5 +11,5 @@ class ContactAddress extends Model
 
     protected $table = 'contact__contactaddresses';
     public $translatedAttributes = [];
-    protected $fillable = ['contactId','name','address','city','state','zip_code','coutry','fax','billingphone'];
+    protected $fillable = ['contactId','name','address','city','state','zip_code','country','fax','billingphone'];
 }

@@ -42,6 +42,7 @@ class ContactServiceProvider extends ServiceProvider
         require_once __DIR__.'/../includes/functions.php';
 
         $this->publishConfig('contact', 'permissions');
+        $this->publishConfig('contact', 'contact-type');
 
         $this->loadMigrationsFrom(__DIR__ . '/../Database/Migrations');
     }
