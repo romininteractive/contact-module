@@ -1,7 +1,7 @@
 {
     "name": "romininteractive/contact-module",
-    "type": "asgard-module",
     "description": "",
+    "type": "asgard-module",
     "license": "MIT",
     "require": {
         "php": ">=7.0.0",
@@ -18,7 +18,7 @@
             "Modules\\": "Modules/"
         }
     },
-    "minimum-stability": "dev",
+    "minimum-stability": "stable",
     "prefer-stable": true,
     "authors": [
         {
@@ -38,7 +38,7 @@
     },
     "autoload": {
         "psr-4": {
-            "Modules\\Contact\\": "."
+            "Modules\\Contact\\": ""
         }
     }
 }
