@@ -32,7 +32,7 @@ class Contact extends Model implements ContactInterface
 
     public function getFullNameAttribute($value)
     {
-        return ucfirst($this->first_name) . ' ' . $this->last_name;
+        return ucfirst($this->first_name) . ' ' . ucfirst($this->last_name);
     }
 
     public function reminders()
@@ -72,5 +72,17 @@ class Contact extends Model implements ContactInterface
 
     public function estimate(){
         return $this->hasMany(Estimate::class);
+    }
+
+    public static function fieldValues()
+    {
+        $customers = Contact::whereUserType('customer')->get();
+        $data = [];
+
+        foreach ($customers as &$customer) {
+            $data[$customer->id] = $customer->full_name;
+        }
+
+        return $data;
     }
 }
