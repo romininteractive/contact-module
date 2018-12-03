@@ -40,7 +40,9 @@
                             <?php if (isset($contacts)): ?>
                             <?php foreach ($contacts as $contact): ?>
                             <tr>
-                                <td>{{ $contact->first_name }}  {{ $contact->last_name }}</td>
+                                <td>{{ $contact->full_name }}<br/>
+                                    <span class="label label-{{ $contact->typeClass() }}">{{ $contact->user_type }}</span>
+                                </td>
                                 <td>{{ $contact->email }}</td>
                                 <td>
                                     <a href="{{ route('admin.contact.contact.edit', [$contact->id]) }}">
