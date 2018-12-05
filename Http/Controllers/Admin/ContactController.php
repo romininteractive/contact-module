@@ -33,9 +33,14 @@ class ContactController extends AdminBaseController
      *
      * @return Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $contacts = $this->contact->all();
+        if(! $request->type){
+            $contacts = $this->contact->all();
+        }
+        else {
+            $contacts = $this->contact->getByAttributes(['user_type' => $request->type]);
+        }
 
         return view('contact::admin.contacts.index', compact('contacts'));
     }

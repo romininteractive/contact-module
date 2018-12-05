@@ -96,6 +96,27 @@
                 var value = $(this).val();
                 $("#sfax").val(value);
             });
+
+            $("#first_name").keyup(function(){
+                var firstName = $(this).val();
+
+                $("#name").val(firstName);
+                $("#sname").val(firstName);
+            });
+            $("#last_name").keyup(function(){
+                var lastName = $(this).val();
+
+                $("#name").val($("#first_name").val() + ' ' + lastName);
+                $("#sname").val($("#first_name").val() + ' ' + lastName);
+            });
+
+            $("#phone").keyup(function(){
+                var val = $(this).val();
+
+                $("#billingphone").val(val);
+                $("#sbillingphone").val(val);
+            });
+
             $("#billingphone").keyup(function () {
                 var value = $(this).val();
                 $("#sbillingphone").val(value);
