@@ -2,7 +2,6 @@
 
 namespace Modules\Contact\Http\Controllers\Admin;
 
-use DB;
 use Illuminate\Foundation\Validation\ValidatesRequests;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
@@ -11,16 +10,20 @@ use Modules\Contact\Entities\ContactAddress;
 use Modules\Contact\Http\Requests\CreateContactRequest;
 use Modules\Contact\Http\Requests\UpdateContactRequest;
 use Modules\Contact\Repositories\ContactRepository;
+use Modules\Contact\Tables\ContactsTable;
 use Modules\Core\Http\Controllers\Admin\AdminBaseController;
+use Modules\Rarv\Table\TableBuilder;
 use Nwidart\Modules\config;
 
 class ContactController extends AdminBaseController
 {
+    use ValidatesRequests;
+
     /**
      * @var ContactRepository
      */
     private $contact;
-    use ValidatesRequests;
+
     public function __construct(ContactRepository $contact)
     {
         parent::__construct();
@@ -33,16 +36,9 @@ class ContactController extends AdminBaseController
      *
      * @return Response
      */
-    public function index(Request $request)
+    public function index(Request $request, TableBuilder $builder)
     {
-        if(! $request->type){
-            $contacts = $this->contact->all();
-        }
-        else {
-            $contacts = $this->contact->getByAttributes(['user_type' => $request->type]);
-        }
-
-        return view('contact::admin.contacts.index', compact('contacts'));
+        return $builder->setTable(new ContactsTable('contact.contacts'))->view();
     }
 
     /**
@@ -53,10 +49,9 @@ class ContactController extends AdminBaseController
     public function create()
     {
         $contact_type = config('asgard.contact.contact-type');
-        $salutation = config('asgard.contact.user-salutation');        
+        $salutations             = config('asgard.contact.user-salutation');
 
-        $user_salution = collect($salutation);
-        return view('contact::admin.contacts.create', compact('contact_type','user_salution'));
+        return view('contact::admin.contacts.create', compact('contact_type', 'salutations'));
     }
 
     /**
@@ -91,7 +86,7 @@ class ContactController extends AdminBaseController
         $contactaddresss->fax          = $request->state;
         $contactaddresss->billingphone = $request->billingphone;
 
-        $shipping_details              = new ContactAddress();
+        $shipping_details               = new ContactAddress();
         $shipping_details->contactId    = $conatct->id;
         $shipping_details->type         = 'shipping';
         $shipping_details->name         = $request->sname;
@@ -122,11 +117,9 @@ class ContactController extends AdminBaseController
         $billingConatctAddress  = ContactAddress::where('contactId', $contact->id)->where('type', 'billing')->first();
         $shippingConatctAddress = ContactAddress::where('contactId', $contact->id)->where('type', 'shipping')->first();
         $contact_type           = config('asgard.contact.contact-type');
-        $salutation = config('asgard.core.user-salution');        
+        $salutations             = config('asgard.contact.user-salutation');
 
-        $user_salution = Collect($salutation);
-
-        return view('contact::admin.contacts.edit', compact('contact', 'billingConatctAddress', 'shippingConatctAddress', 'contact_type','user_salution'));
+        return view('contact::admin.contacts.edit', compact('contact', 'billingConatctAddress', 'shippingConatctAddress', 'contact_type', 'salutations'));
     }
 
     /**contactAddress
@@ -160,7 +153,7 @@ class ContactController extends AdminBaseController
         $billingConatctAddress->state        = $request->state;
         $billingConatctAddress->zip_code     = $request->zip_code;
         $billingConatctAddress->country      = $request->country;
-        $billingConatctAddress->fax        = $request->fax;
+        $billingConatctAddress->fax          = $request->fax;
         $billingConatctAddress->billingphone = $request->billingphone;
         $billingConatctAddress->save();
 
@@ -170,7 +163,7 @@ class ContactController extends AdminBaseController
         $shippingConatctAddress->state        = $request->sstate;
         $shippingConatctAddress->zip_code     = $request->szip_code;
         $shippingConatctAddress->country      = $request->scountry;
-        $shippingConatctAddress->fax        = $request->sfax;
+        $shippingConatctAddress->fax          = $request->sfax;
         $shippingConatctAddress->billingphone = $request->sbillingphone;
         $shippingConatctAddress->save();
 

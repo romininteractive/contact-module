@@ -18,6 +18,11 @@ return [
         'create contact' => 'Create a contact',
     ],
     'table'            => [
+        'columns' => [
+            'full_name' => 'Full Name',
+            'email' => 'Email',
+            'phone_no' => 'Phone Number',
+        ],
     ],
     'form'             => [
     ],

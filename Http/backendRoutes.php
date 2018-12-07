@@ -13,7 +13,7 @@ $router->group(['prefix' =>'/contact'], function (Router $router) {
         'middleware' => 'can:contact.contacts.index'
     ]);
     $router->get('contacts/create', [
-        'as' => 'admin.contact.contact.create',
+        'as' => 'admin.contact.contacts.create',
         'uses' => 'ContactController@create',
         'middleware' => 'can:contact.contacts.create'
     ]);

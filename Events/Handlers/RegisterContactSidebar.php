@@ -46,7 +46,7 @@ class RegisterContactSidebar implements \Maatwebsite\Sidebar\SidebarExtender
                 $item->item(trans('contact::contacts.title.vendors'), function (Item $item) {
                     $item->icon('fa fa-copy');
                     $item->weight(0);
-                    $item->append('admin.contact.contact.create');
+                    $item->append('admin.contact.contacts.create');
                     $item->route('admin.contact.contact.index', ['type' => 'vendor']);
                     $item->authorize(
                         $this->auth->hasAccess('contact.contacts.index')
@@ -56,7 +56,7 @@ class RegisterContactSidebar implements \Maatwebsite\Sidebar\SidebarExtender
                 $item->item(trans('contact::contacts.title.customers'), function (Item $item) {
                     $item->icon('fa fa-copy');
                     $item->weight(0);
-                    $item->append('admin.contact.contact.create');
+                    $item->append('admin.contact.contacts.create');
                     $item->route('admin.contact.contact.index', ['type' => 'customer']);
                     $item->authorize(
                         $this->auth->hasAccess('contact.contacts.index')

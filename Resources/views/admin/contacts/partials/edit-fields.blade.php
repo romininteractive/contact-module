@@ -15,7 +15,7 @@
             <div class="clearfix"></div>
       <div class="col-sm-4">
             {!! Form::label('Salutation', 'Salutation') !!}
-          {!! Form::select('salutation', $user_salution, $contact->salutation, ['class' => 'form-control'] ) !!}                        <br>
+          {!! Form::select('salutation', $salutations, $contact->salutation, ['class' => 'form-control'] ) !!}                        <br>
          <!-- {!! Form::normalSelect('salutation','Salutation',$errors,['','Mr.','Mrs.','Ms.','MISS','Dr.']) !!} -->
          {!! Form::normalInput('email', 'Email Address', $errors,$contact) !!}
          {!! Form::normalInput('company_name', 'Company Name', $errors,$contact) !!}
