@@ -18,22 +18,22 @@ $router->group(['prefix' =>'/contact'], function (Router $router) {
         'middleware' => 'can:contact.contacts.create'
     ]);
     $router->post('contacts', [
-        'as' => 'admin.contact.contact.store',
+        'as' => 'admin.contact.contacts.store',
         'uses' => 'ContactController@store',
         'middleware' => 'can:contact.contacts.create'
     ]);
     $router->get('contacts/{contact}/edit', [
-        'as' => 'admin.contact.contact.edit',
+        'as' => 'admin.contact.contacts.edit',
         'uses' => 'ContactController@edit',
         'middleware' => 'can:contact.contacts.edit'
     ]);
     $router->put('contacts/{contact}', [
-        'as' => 'admin.contact.contact.update',
+        'as' => 'admin.contact.contacts.update',
         'uses' => 'ContactController@update',
         'middleware' => 'can:contact.contacts.edit'
     ]);
     $router->delete('contacts/{contact}', [
-        'as' => 'admin.contact.contact.destroy',
+        'as' => 'admin.contact.contacts.destroy',
         'uses' => 'ContactController@destroy',
         'middleware' => 'can:contact.contacts.destroy'
     ]);

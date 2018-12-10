@@ -12,7 +12,7 @@
 @stop
 
 @section('content')
-    {!! Form::open(['route' => ['admin.contact.contact.update', $contact->id], 'method' => 'put']) !!}
+    {!! Form::open(['route' => ['admin.contact.contacts.update', $contact->id], 'method' => 'put']) !!}
     <div class="row">
         <div class="col-md-12">
             <div class="nav-tabs-custom">
