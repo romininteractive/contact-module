@@ -14,6 +14,8 @@
 @section('content')
     {!! Form::open(['route' => ['admin.contact.contacts.update', $contact->id], 'method' => 'put']) !!}
     <div class="row">
+        <input type="hidden" name="country_name" id="country_name" value="<?php echo $billingConatctAddress->country; ?>">
+        <input type="hidden" name="state_name" id="state_name" value="<?php echo $billingConatctAddress->state; ?>">        
         <div class="col-md-12">
             <div class="nav-tabs-custom">
                 @include('partials.form-tab-headers')
@@ -48,7 +50,13 @@
 @stop
 
 @push('js-stack')
+<script type="text/javascript" src="{{ asset('modules/rarv/js/countries.js') }}"></script>
     <script type="text/javascript">
+        $(document).ready(function(){
+            var count_val = $('#country_name').val();
+            var state_val = $('#state_name').val();
+            populateCountries("country", "state" ,count_val, state_val);        
+        });    
         $( document ).ready(function() {
             $(document).keypressAction({
                 actions: [

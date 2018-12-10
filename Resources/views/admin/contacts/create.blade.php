@@ -12,7 +12,7 @@
 @stop
 
 @section('content')
-    {!! Form::open(['route' => ['admin.contact.contact.store'], 'method' => 'post']) !!}
+    {!! Form::open(['route' => ['admin.contact.contacts.store'], 'method' => 'post']) !!}
     <div class="row">
         <div class="col-md-12">
             <div class="nav-tabs-custom">
@@ -48,7 +48,12 @@
 @stop
 
 @push('js-stack')
+<script type="text/javascript" src="{{ asset('modules/rarv/js/countries.js') }}"></script>
+
     <script type="text/javascript">
+    $(document).ready(function(){
+        populateCountries("country", "state");        
+    });        
         $( document ).ready(function() {
             $(document).keypressAction({
                 actions: [
