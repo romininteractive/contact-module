@@ -1,0 +1,37 @@
+<?php
+return array(
+    'barcode_types' => [
+        "QRCODE"     => "QRCODE",
+        "PDF417"     => "PDF417",
+        "DATAMATRIX" => "DATAMATRIX",
+        "C39+"       => "C39+",
+        "C39E"       => "C39E",
+        "C39E+"      => "C39E+",
+        "C93"        => "C93",
+        "S25"        => "S25",
+        "S25+"       => "S25+",
+        "I25"        => "I25",
+        "I25+"       => "I25+",
+        "C128"       => "C128",
+        "C128A"      => "C128A",
+        "C128B"      => "C128B",
+        "C128C"      => "C128C",
+        "EAN2"       => "EAN2",
+        "EAN5"       => "EAN5",
+        "EAN8"       => "EAN8",
+        "EAN13"      => "EAN13",
+        "UPCA"       => "UPCA",
+        "UPCE"       => "UPCE",
+        "MSI"        => "MSI",
+        "MSI+"       => "MSI+",
+        "POSTNET"    => "POSTNET",
+        "PLANET"     => "PLANET",
+    ],
+    'paper_company_name' =>[
+        'nova' => 'nova',
+    ],
+    'paper_size' =>[
+        '3*8' => '3*8',
+        '4*8' => '4*8',
+    ],
+);
