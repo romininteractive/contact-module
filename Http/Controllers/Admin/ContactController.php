@@ -207,47 +207,47 @@ class ContactController extends AdminBaseController
                         foreach ($data as $key => $contact) {
                             // dd($contact->type);
                             // foreach ($contacts as $key => $contact) {
-                                // dd($contact);
-                                $type         = $contact->type;
+                            // dd($contact);
+                            $type         = $contact->type;
+                            $contact_type = 'customer';
+                            if ($type != null && $type == 'CUSTOMER') {
                                 $contact_type = 'customer';
-                                if ($type != null && $type == 'CUSTOMER') {
-                                    $contact_type = 'customer';
-                                } elseif ($type != null && $type == 'VENDOR') {
-                                    $contact_type = 'vendor';
-                                }
+                            } elseif ($type != null && $type == 'VENDOR') {
+                                $contact_type = 'vendor';
+                            }
 
-                                if ($type != null && $contact->first != null && $contact->last != null) {
-                                    try {
-                                        $newcontact = Contact::create([
-                                            'salutation'   => 'ms',
-                                            'first_name'   => $contact->first,
-                                            'last_name'    => $contact->last,
-                                            'company_name' => $contact->name,
-                                            'email'        => $contact->email,
-                                            // 'phone'        => $contact->email,
-                                            'user_type'    => $contact_type,
+                            if ($type != null && $contact->first != null && $contact->last != null) {
+                                try {
+                                    $newcontact = Contact::firstOrCreate([
+                                        'salutation'   => 'ms',
+                                        'first_name'   => $contact->first,
+                                        'last_name'    => $contact->last,
+                                        'company_name' => $contact->name,
+                                        'email'        => $contact->email,
+                                        // 'phone'        => $contact->email,
+                                        'user_type'    => $contact_type,
+                                    ]);
+                                    $address_types = ['billing', 'shipping'];
+                                    foreach ($address_types as $key => $value) {
+                                        $address_details = ContactAddress::firstOrCreate([
+                                            'contactId'    => $newcontact->id,
+                                            'type'         => $value,
+                                            'name'         => $newcontact->fullname,
+                                            'address'      => $contact->street_address,
+                                            'city'         => $contact->city,
+                                            'state'        => $contact->stateprovince,
+                                            'zip_code'     => $contact->postalzip_code,
+                                            'country'      => $contact->country,
+                                            'billingphone' => $contact->phone,
                                         ]);
-                                        $address_types = ['billing', 'shipping'];
-                                        foreach ($address_types as $key => $value) {
-                                        $address_details            = new ContactAddress();
-                                        $address_details->contactId = $newcontact->id;
-                                        $address_details->type      = $value;
-                                        $address_details->name      = $newcontact->fullname;
-                                        $address_details->address   = $contact->street_address;
-                                        $address_details->city      = $contact->city;
-                                        $address_details->state     = $contact->stateprovince;
-                                        $address_details->zip_code  = $contact->postalzip_code;
-                                        $address_details->country   = $contact->country;
-                                        $address_details->billingphone   = $contact->phone;
-                                        $address_details->save();
-                                        }
-                                    } catch (\Exception $e) {
-                                        dd($e);
-                                        error_log($e);
-
                                     }
+                                } catch (\Exception $e) {
+                                    dd($e);
+                                    error_log($e);
 
                                 }
+
+                            }
                             // }
                         }
                     } catch (\Exception $e) {
