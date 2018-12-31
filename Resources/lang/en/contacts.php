@@ -13,9 +13,11 @@ return [
         'customer'       => 'Customer',
         'vendors'        => 'Vendors',
         'vendor'         => 'Vendor',
+        'import'        => 'Import',
     ],
     'button'           => [
         'create contact' => 'Create a contact',
+        'import' => 'Import Now',        
     ],
     'table'            => [
         'columns' => [

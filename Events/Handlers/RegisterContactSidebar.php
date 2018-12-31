@@ -62,6 +62,15 @@ class RegisterContactSidebar implements \Maatwebsite\Sidebar\SidebarExtender
                         $this->auth->hasAccess('contact.contacts.index')
                     );
                 });
+                $item->item(trans('contact::contacts.title.import'), function (Item $item) {
+                    $item->icon('fa fa-copy');
+                    $item->weight(0);
+                    $item->append('admin.contact.contacts.create');
+                    $item->route('admin.contact.import');
+                    $item->authorize(
+                        $this->auth->hasAccess('contact.contacts.index')
+                    );
+                });                
 
             });
         });
