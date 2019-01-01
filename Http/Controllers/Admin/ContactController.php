@@ -201,13 +201,9 @@ class ContactController extends AdminBaseController
                 $path = $request->file('contact')->getRealPath();
                 $data = \Excel::load($path)->get();
 
-                // $category_ids = [];
                 if ($data->count()) {
                     try {
                         foreach ($data as $key => $contact) {
-                            // dd($contact->type);
-                            // foreach ($contacts as $key => $contact) {
-                            // dd($contact);
                             $type         = $contact->type;
                             $contact_type = 'customer';
                             if ($type != null && $type == 'CUSTOMER') {
@@ -224,7 +220,7 @@ class ContactController extends AdminBaseController
                                         'last_name'    => $contact->last,
                                         'company_name' => $contact->name,
                                         'email'        => $contact->email,
-                                        // 'phone'        => $contact->email,
+                                        'phone'        => ($contact->phone)?$contact->phone:null,
                                         'user_type'    => $contact_type,
                                     ]);
                                     $address_types = ['billing', 'shipping'];
