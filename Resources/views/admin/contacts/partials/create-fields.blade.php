@@ -36,33 +36,31 @@
         </fieldset>
     </div>
     <div class="row" style="margin-top: 10px;">
-        <div class="col-sm-6">
+        <div class="col-sm-{{ (setting('product::setting_details') ? 6 : 12) }}">
             <fieldset>
                 <legend>
                     Billing Details:
                 </legend>
                 {!! Form::normalInput('name', 'Name', $errors, '', ['tabindex'=> '10']) !!}
                 {!! Form::normalInput('address', 'Address', $errors, '', ['tabindex'=> '12']) !!}
-                <!-- {!! Form::normalInput('country', 'Country', $errors, '', ['tabindex'=> '20']) !!} -->
                 <div class='form-group'>
-                {!! Form::label('country', 'country') !!}
-                <select name="country" class="form-control" id="country">
-                </select>
+                    {!! Form::label('country', 'country') !!}
+                    <select name="country" class="form-control" id="country">
+                    </select>
                 </div>                
                 <div class='form-group'>
-                {!! Form::label('state', 'state') !!}
-                <select name="state" class="form-control" id="state">
-                </select>
+                    {!! Form::label('state', 'state') !!}
+                    <select name="state" class="form-control" id="state">
+                    </select>
                 </div>
 
-<!--                 {!! Form::normalInput('state', 'State', $errors, '', ['tabindex'=> '16']) !!} -->
-                
                 {!! Form::normalInput('city', 'City', $errors, '', ['tabindex'=> '14']) !!}
                 {!! Form::normalInput('zip_code', 'Zip Code', $errors, null, ['class' => 'form-control','maxlength' => 6, 'onkeypress' => 'return isNumber(event)','tabindex'=> '18']) !!}
                 {!! Form::normalInput('fax', 'Fax', $errors, '', ['tabindex'=> '22']) !!}
                 {!! Form::normalInput('billingphone', 'Phone', $errors, null, ['class' => 'form-control','maxlength' => 10, 'onkeypress' => 'return isNumber(event)','tabindex'=> '24']) !!}
             </fieldset>
         </div>
+        @if(setting('contact::shipping_details'))
         <div class="col-sm-6">
             <fieldset>
                 <legend>
@@ -78,5 +76,6 @@
                 {!! Form::normalInput('sbillingphone', 'Phone', $errors, null, ['class' => 'form-control','maxlength' => 10, 'onkeypress' => 'return isNumber(event)','tabindex'=> '25']) !!}
             </fieldset>
         </div>
+        @endif
     </div>
 </div>

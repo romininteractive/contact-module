@@ -18,12 +18,12 @@ class CreateContactContactAddressesTable extends Migration
             $table->integer('contactId')->unsigned();
             $table->string('type');
             $table->string('name');
-            $table->string('address');
-            $table->string('city');
+            $table->string('address')->nullable();
+            $table->string('city')->nullable();
             $table->string('state');
-            $table->string('zip_code');
+            $table->string('zip_code')->nullable();
             $table->string('coutry');
-            $table->string('fax');
+            $table->string('fax')->nullable();
             $table->string('billingphone');
            $table->foreign('contactId')->references('id')->on('contact__contacts')->onDelete('cascade');
             // Your fields

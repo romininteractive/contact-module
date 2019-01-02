@@ -63,43 +63,52 @@ class ContactController extends AdminBaseController
     public function store(CreateContactRequest $request)
     {
         $input = $request->all();
-        $this->validate($request, [
-            'name'          => 'required',
-            'sname'         => 'required',
-            'address'       => 'required',
-            'saddress'      => 'required',
-            'billingphone'  => 'required|min:10',
-            'sbillingphone' => 'required|min:10',
-        ]);
 
-        $conatct = $this->contact->create($request->all());
+        $rules = [
+            'name'          => 'required',
+            'address'       => 'nullable|min:3',
+            'billingphone'  => 'nullable|min:10',
+        ];
+
+        if(setting('contact::shipping_details')){
+            $rules = array_merge($rules, [
+                'sname'         => 'required',
+                'saddress'      => 'nullable|min:3',
+                'sbillingphone' => 'nullable|min:10',
+            ]);
+        }
+
+        $this->validate($request, $rules);
+
+        $contact = $this->contact->create($request->all());
 
         $contactaddresss               = new ContactAddress();
-        $contactaddresss->contactId    = $conatct->id;
+        $contactaddresss->contactId    = $contact->id;
         $contactaddresss->type         = 'billing';
         $contactaddresss->name         = $request->name;
-        $contactaddresss->address      = $request->address;
+        $contactaddresss->address      = $request->get('address', '');
         $contactaddresss->city         = $request->city;
         $contactaddresss->state        = $request->state;
         $contactaddresss->zip_code     = $request->zip_code;
         $contactaddresss->country      = $request->country;
         $contactaddresss->fax          = $request->state;
         $contactaddresss->billingphone = $request->billingphone;
-
-        $shipping_details               = new ContactAddress();
-        $shipping_details->contactId    = $conatct->id;
-        $shipping_details->type         = 'shipping';
-        $shipping_details->name         = $request->sname;
-        $shipping_details->address      = $request->saddress;
-        $shipping_details->city         = $request->scity;
-        $shipping_details->state        = $request->sstate;
-        $shipping_details->zip_code     = $request->szip_code;
-        $shipping_details->country      = $request->scountry;
-        $shipping_details->fax          = $request->sstate;
-        $shipping_details->billingphone = $request->sbillingphone;
         $contactaddresss->save();
-        $shipping_details->save();
-        /* dd($contactaddresss, $shipping_details);*/
+
+        if(setting('contact::shipping_details')){
+            $shipping_details               = new ContactAddress();
+            $shipping_details->contactId    = $contact->id;
+            $shipping_details->type         = 'shipping';
+            $shipping_details->name         = $request->sname;
+            $shipping_details->address      = $request->get('saddress', '');
+            $shipping_details->city         = $request->scity;
+            $shipping_details->state        = $request->sstate;
+            $shipping_details->zip_code     = $request->szip_code;
+            $shipping_details->country      = $request->scountry;
+            $shipping_details->fax          = $request->sstate;
+            $shipping_details->billingphone = $request->sbillingphone;
+            $shipping_details->save();
+        }
 
         return redirect()->route('admin.contact.contact.index')
             ->withSuccess(trans('core::core.messages.resource created', ['name' => trans('contact::contacts.title.contacts')]));
@@ -131,21 +140,26 @@ class ContactController extends AdminBaseController
      */
     public function update(Contact $contact, UpdateContactRequest $request)
     {
-        // dd($request);
-        $this->validate($request, [
+        $rules = [
             'name'          => 'required',
-            'sname'         => 'required',
-            'address'       => 'required',
-            'saddress'      => 'required',
-            'billingphone'  => 'required|min:10',
-            'sbillingphone' => 'required|min:10',
-        ]);
+            'address'       => 'nullable|min:3',
+            'billingphone'  => 'nullable|min:10',
+        ];
+
+        if(setting('contact::shipping_details')){
+            $rules = array_merge($rules, [
+                'sname'         => 'required',
+                'saddress'      => 'nullable|min:3',
+                'sbillingphone' => 'nullable|min:10',
+            ]);
+        }
+
+        $this->validate($request, $rules);
 
         $contact = $this->contact->update($contact, $request->all());
 
         $billingConatctAddress = ContactAddress::where('contactId', $contact->id)->where('type', 'billing')->first();
 
-        $shippingConatctAddress = ContactAddress::where('contactId', $contact->id)->where('type', 'shipping')->first();
 
         $billingConatctAddress->name         = $request->name;
         $billingConatctAddress->address      = $request->address;
@@ -157,19 +171,18 @@ class ContactController extends AdminBaseController
         $billingConatctAddress->billingphone = $request->billingphone;
         $billingConatctAddress->save();
 
-        $shippingConatctAddress->name         = $request->sname;
-        $shippingConatctAddress->address      = $request->saddress;
-        $shippingConatctAddress->city         = $request->scity;
-        $shippingConatctAddress->state        = $request->sstate;
-        $shippingConatctAddress->zip_code     = $request->szip_code;
-        $shippingConatctAddress->country      = $request->scountry;
-        $shippingConatctAddress->fax          = $request->sfax;
-        $shippingConatctAddress->billingphone = $request->sbillingphone;
-        $shippingConatctAddress->save();
-
-        // DB::table('contact__contactaddresses')
-        //     ->where('id', $contact->id)
-        //     ->update(['name' => $name, 'city' => $city, 'address' => $address, 'state' => $state, 'zip_code' => $zip_code, 'country' => $country, 'billingphone' => $billingphone]);
+        if(setting('contact::shipping_details')){        
+            $shippingConatctAddress = ContactAddress::where('contactId', $contact->id)->where('type', 'shipping')->first();
+            $shippingConatctAddress->name         = $request->sname;
+            $shippingConatctAddress->address      = $request->saddress;
+            $shippingConatctAddress->city         = $request->scity;
+            $shippingConatctAddress->state        = $request->sstate;
+            $shippingConatctAddress->zip_code     = $request->szip_code;
+            $shippingConatctAddress->country      = $request->scountry;
+            $shippingConatctAddress->fax          = $request->sfax;
+            $shippingConatctAddress->billingphone = $request->sbillingphone;
+            $shippingConatctAddress->save();
+        }
 
         return redirect()->route('admin.contact.contact.index')
             ->withSuccess(trans('core::core.messages.resource updated', ['name' => trans('contact::contacts.title.contacts')]));

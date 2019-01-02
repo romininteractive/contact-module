@@ -50,7 +50,7 @@ class Contact extends Model implements ContactInterface
         return $this->full_name;
     }
 
-    public function getPhone()
+    public function mobileNo()
     {
         return $this->phone;
     }

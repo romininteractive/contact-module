@@ -13,7 +13,7 @@ class ContactsTable extends Table
 	protected $columns = [
 		'full_name', 
 		'email',
-		'phone_no'
+		'phone'
 	];
 
 	public function getRecords()

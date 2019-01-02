@@ -2,7 +2,6 @@
 	<div class="row">
 		 <fieldset>
     <legend>General Detail:</legend>
-
       <div class="form-group col-sm-4">
           {!! Form::label('Type', 'Contact Type:') !!}&nbsp;&nbsp;&nbsp;
               @foreach ($contact_type as $k => $type)
@@ -12,14 +11,12 @@
                   </label>
               @endforeach
       </div>
-            <div class="clearfix"></div>
+        <div class="clearfix"></div>
       <div class="col-sm-4">
-            {!! Form::label('Salutation', 'Salutation') !!}
+          {!! Form::label('Salutation', 'Salutation') !!}
           {!! Form::select('salutation', $salutations, $contact->salutation, ['class' => 'form-control', 'tabindex'=> '1'] ) !!}                        <br>
-         <!-- {!! Form::normalSelect('salutation','Salutation',$errors,['','Mr.','Mrs.','Ms.','MISS','Dr.']) !!} -->
-        {!! Form::normalInput('first_name', 'First Name', $errors,$contact, ['tabindex'=> '2']) !!}
-       {!! Form::normalInput('last_name', 'Last Name', $errors,$contact, ['tabindex'=> '3']) !!}                 
-
+          {!! Form::normalInput('first_name', 'First Name', $errors,$contact, ['tabindex'=> '2']) !!}
+         {!! Form::normalInput('last_name', 'Last Name', $errors,$contact, ['tabindex'=> '3']) !!}                 
       </div>
       <div class="col-sm-4">
          {!! Form::normalInput('email', 'Email Address', $errors,$contact, ['tabindex'=> '4']) !!}
@@ -32,15 +29,12 @@
        {!! Form::normalInput('designation', 'Designation', $errors,$contact, ['tabindex'=> '8']) !!}
        {!! Form::normalInput('gstin', 'GSTIN', $errors,$contact, ['tabindex'=> '9']) !!}
       </div>      
-</fieldset>
-</div>
-
-
-
+  </fieldset>
+  </div>
 <div class="row">
   <div class="col-sm-6">
-  	  <fieldset>
-    <legend>Billing Detail:</legend>
+	  <fieldset>
+      <legend>Billing Detail:</legend>
 
   	{!! Form::normalInput('name', 'Name', $errors,$billingConatctAddress, ['tabindex'=> '10']) !!}
     	 {!! Form::normalInput('address', 'Address', $errors,$billingConatctAddress, ['tabindex'=> '12']) !!}
@@ -55,9 +49,8 @@
       </select>
       </div>           
     	 {!! Form::normalInput('city', 'City', $errors,$billingConatctAddress, ['tabindex'=> '14']) !!}
-    	 <!-- {!! Form::normalInput('state', 'State', $errors,$billingConatctAddress, ['tabindex'=> '16']) !!} -->
     	 {!! Form::normalInput('zip_code', 'Zip Code', $errors,$billingConatctAddress, ['class' => 'form-control','maxlength' => 6, 'onkeypress' => 'return isNumber(event)','tabindex'=> '18']) !!}
-    	 <!-- {!! Form::normalInput('country', 'Country', $errors,$billingConatctAddress, ['tabindex'=> '20']) !!} -->
+
     	        {!! Form::normalInput('fax', 'Fax', $errors,$billingConatctAddress, ['tabindex'=> '22']) !!}
     	         {!! Form::normalInput('billingphone', 'Phone', $errors,$billingConatctAddress, ['class' => 'form-control','maxlength' => 10, 'onkeypress' => 'return isNumber(event)','tabindex'=> '24']) !!}
     	     </fieldset>

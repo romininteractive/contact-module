@@ -21,7 +21,7 @@ return [
         'columns' => [
             'full_name' => 'Full Name',
             'email' => 'Email',
-            'phone_no' => 'Phone Number',
+            'phone' => 'Phone Number',
         ],
     ],
     'form'             => [
