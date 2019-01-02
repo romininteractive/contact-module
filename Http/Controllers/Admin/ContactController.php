@@ -2,6 +2,7 @@
 
 namespace Modules\Contact\Http\Controllers\Admin;
 
+use Excel;
 use Illuminate\Foundation\Validation\ValidatesRequests;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
@@ -49,7 +50,7 @@ class ContactController extends AdminBaseController
     public function create()
     {
         $contact_type = config('asgard.contact.contact-type');
-        $salutations             = config('asgard.contact.user-salutation');
+        $salutations  = config('asgard.contact.user-salutation');
 
         return view('contact::admin.contacts.create', compact('contact_type', 'salutations'));
     }
@@ -126,7 +127,7 @@ class ContactController extends AdminBaseController
         $billingConatctAddress  = ContactAddress::where('contactId', $contact->id)->where('type', 'billing')->first();
         $shippingConatctAddress = ContactAddress::where('contactId', $contact->id)->where('type', 'shipping')->first();
         $contact_type           = config('asgard.contact.contact-type');
-        $salutations             = config('asgard.contact.user-salutation');
+        $salutations            = config('asgard.contact.user-salutation');
 
         return view('contact::admin.contacts.edit', compact('contact', 'billingConatctAddress', 'shippingConatctAddress', 'contact_type', 'salutations'));
     }
@@ -200,5 +201,76 @@ class ContactController extends AdminBaseController
 
         return redirect()->route('admin.contact.contact.index')
             ->withSuccess(trans('core::core.messages.resource deleted', ['name' => trans('contact::contacts.title.contacts')]));
+    }
+
+    public function importContact()
+    {
+        return view('contact::admin.contacts.import');
+    }
+    public function postImportContact(request $request)
+    {
+        try {
+            if ($request->hasFile('contact')) {
+                $path = $request->file('contact')->getRealPath();
+                $data = \Excel::load($path)->get();
+
+                if ($data->count()) {
+                    try {
+                        foreach ($data as $key => $contact) {
+                            $type         = $contact->type;
+                            $contact_type = 'customer';
+                            if ($type != null && $type == 'CUSTOMER') {
+                                $contact_type = 'customer';
+                            } elseif ($type != null && $type == 'VENDOR') {
+                                $contact_type = 'vendor';
+                            }
+
+                            if ($type != null && $contact->first != null && $contact->last != null) {
+                                try {
+                                    $newcontact = Contact::firstOrCreate([
+                                        'salutation'   => 'ms',
+                                        'first_name'   => $contact->first,
+                                        'last_name'    => $contact->last,
+                                        'company_name' => $contact->name,
+                                        'email'        => $contact->email,
+                                        'phone'        => ($contact->phone)?$contact->phone:null,
+                                        'user_type'    => $contact_type,
+                                    ]);
+                                    $address_types = ['billing', 'shipping'];
+                                    foreach ($address_types as $key => $value) {
+                                        $address_details = ContactAddress::firstOrCreate([
+                                            'contactId'    => $newcontact->id,
+                                            'type'         => $value,
+                                            'name'         => $newcontact->fullname,
+                                            'address'      => $contact->street_address,
+                                            'city'         => $contact->city,
+                                            'state'        => $contact->stateprovince,
+                                            'zip_code'     => $contact->postalzip_code,
+                                            'country'      => $contact->country,
+                                            'billingphone' => $contact->phone,
+                                        ]);
+                                    }
+                                } catch (\Exception $e) {
+                                    dd($e);
+                                    error_log($e);
+
+                                }
+
+                            }
+                            // }
+                        }
+                    } catch (\Exception $e) {
+                        dd($e);
+                        error_log($e);
+                    }
+                    return redirect()->route('admin.contact.contact.index')
+                        ->withSuccess('Contact import successfully');
+                    // }
+                }
+            }
+        } catch (\Exception $e) {
+            error_log($e);
+            return 'FAIL';
+        }
     }
 }

@@ -70,6 +70,14 @@ $router->group(['prefix' =>'/contact'], function (Router $router) {
         'uses' => 'ContactAddressController@destroy',
         'middleware' => 'can:contact.contactaddresses.destroy'
     ]);
+
+    Route::get('import', [
+        'as'=> 'admin.contact.import',
+        'uses' => 'ContactController@importContact']);
+    Route::post('postimport', [
+        'as'   => 'admin.contact.postimport',
+        'uses' => 'ContactController@postImportContact']);
+
 // append
 
 

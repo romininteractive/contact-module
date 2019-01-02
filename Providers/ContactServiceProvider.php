@@ -44,6 +44,7 @@ class ContactServiceProvider extends ServiceProvider
         $this->publishConfig('contact', 'settings');
         $this->publishConfig('contact', 'permissions');
         $this->publishConfig('contact', 'contact-type');
+        $this->publishConfig('contact', 'barcode');        
         $this->publishConfig('contact', 'user-salutation');
 
         $this->loadMigrationsFrom(__DIR__ . '/../Database/Migrations');
