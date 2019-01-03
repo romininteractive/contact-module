@@ -4,9 +4,11 @@
     "type": "asgard-module",
     "license": "MIT",
     "require": {
+        "romininteractive/rarv": "dev-master",        
         "php": ">=7.0.0",
         "composer/installers": "~1.0",
-        "idavoll/core-module": "~3.0"
+        "idavoll/core-module": "~3.0",
+        "maatwebsite/excel": "~2",        
     },
     "require-dev": {
         "phpunit/phpunit": "~6.0",
@@ -22,8 +24,8 @@
     "prefer-stable": true,
     "authors": [
         {
-            "name": "Nicolas Widart",
-            "email": "n.widart@gmail.com"
+            "name": "Mahesh Baliya",
+            "email": "mbaliya26@gmail.com"
         }
     ],
     "extra": {
