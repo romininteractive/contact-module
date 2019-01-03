@@ -5,6 +5,7 @@ namespace Modules\Contact\Entities;
 // namespace Notifications;
 use Dimsav\Translatable\Translatable;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Notifications\Notifiable;
 use Modules\Contact\Entities\Vehicle;
 use Modules\Estimate\Entities\Estimate;
@@ -14,11 +15,12 @@ use Modules\Reminder\Entities\Reminder;
 
 class Contact extends Model implements ContactInterface
 {
-    use Notifiable, Translatable;
+    use SoftDeletes, Notifiable, Translatable;
 
     protected $table             = 'contact__contacts';
     public $translatedAttributes = [];
     protected $fillable          = ['salutation', 'first_name', 'last_name', 'company_name', 'email', 'phone', 'designation', 'gstin', 'department', 'type', 'user_type'];
+    protected $dates = ['deleted_at'];    
 
     public function vehicles()
     {
