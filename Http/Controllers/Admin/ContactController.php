@@ -178,9 +178,16 @@ class ContactController extends AdminBaseController
         $shippingConatctAddress->billingphone = $request->sbillingphone;
         $shippingConatctAddress->save();
 
-        // DB::table('contact__contactaddresses')
-        //     ->where('id', $contact->id)
-        //     ->update(['name' => $name, 'city' => $city, 'address' => $address, 'state' => $state, 'zip_code' => $zip_code, 'country' => $country, 'billingphone' => $billingphone]);
+        $messages = trans('core::core.messages.resource updated', ['name' => trans('contact::contacts.title.contacts')]);
+
+        if ($contact->user_type == 'customer') {
+            return redirect()->route('admin.contact.contact.index', ['type' => 'customer'])
+                ->withSuccess($messages);
+        } elseif ($contact->user_type == 'vendor') {
+            return redirect()->route('admin.contact.contact.index', ['type' => 'vendor'])
+                ->withSuccess($messages);
+        }
+        
 
         return redirect()->route('admin.contact.contact.index')
             ->withSuccess(trans('core::core.messages.resource updated', ['name' => trans('contact::contacts.title.contacts')]));
