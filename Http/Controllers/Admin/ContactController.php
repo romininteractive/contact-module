@@ -63,6 +63,7 @@ class ContactController extends AdminBaseController
      */
     public function store(CreateContactRequest $request)
     {
+
         $input = $request->all();
         $this->validate($request, [
             'name'          => 'required',
@@ -102,8 +103,17 @@ class ContactController extends AdminBaseController
         $shipping_details->save();
         /* dd($contactaddresss, $shipping_details);*/
 
+        $messages = trans('core::core.messages.resource created', ['name' => trans('contact::contacts.title.contacts')]);
+
+        if ($conatct->user_type == 'customer') {
+            return redirect()->route('admin.contact.contact.index', ['type' => 'customer'])
+                ->withSuccess($messages);
+        } elseif ($conatct->user_type == 'vendor') {
+            return redirect()->route('admin.contact.contact.index', ['type' => 'vendor'])
+                ->withSuccess($messages);
+        }
         return redirect()->route('admin.contact.contact.index')
-            ->withSuccess(trans('core::core.messages.resource created', ['name' => trans('contact::contacts.title.contacts')]));
+            ->withSuccess($messages);
     }
 
     /**
@@ -220,7 +230,7 @@ class ContactController extends AdminBaseController
                                         'last_name'    => $contact->last,
                                         'company_name' => $contact->name,
                                         'email'        => $contact->email,
-                                        'phone'        => ($contact->phone)?$contact->phone:null,
+                                        'phone'        => ($contact->phone) ? $contact->phone : null,
                                         'user_type'    => $contact_type,
                                     ]);
                                     $address_types = ['billing', 'shipping'];
