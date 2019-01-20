@@ -63,6 +63,7 @@ class ContactController extends AdminBaseController
      */
     public function store(CreateContactRequest $request)
     {
+
         $input = $request->all();
 
         $rules = [
@@ -111,8 +112,10 @@ class ContactController extends AdminBaseController
             $shipping_details->save();
         }
 
-        return redirect()->route('admin.contact.contact.index', ['type' => $contact->type])
-            ->withSuccess(trans('core::core.messages.resource created', ['name' => trans('contact::contacts.title.contacts')]));
+        $messages = trans('core::core.messages.resource created', ['name' => trans('contact::contacts.title.contacts')]);
+
+        return redirect()->route('admin.contact.contact.index', ['type' => $contact->user_type])
+                ->withSuccess($messages);
     }
 
     /**
@@ -185,8 +188,10 @@ class ContactController extends AdminBaseController
             $shippingConatctAddress->save();
         }
 
-        return redirect()->route('admin.contact.contact.index', ['type' => $contact->type])
-            ->withSuccess(trans('core::core.messages.resource updated', ['name' => trans('contact::contacts.title.contacts')]));
+        $message = trans('core::core.messages.resource updated', ['name' => trans('contact::contacts.title.contacts')]);
+
+        return redirect()->route('admin.contact.contact.index', ['type' => $contact->user_type])
+            ->withSuccess($message);
     }
 
     /**
@@ -233,7 +238,7 @@ class ContactController extends AdminBaseController
                                         'last_name'    => $contact->last,
                                         'company_name' => $contact->name,
                                         'email'        => $contact->email,
-                                        'phone'        => ($contact->phone)?$contact->phone:null,
+                                        'phone'        => ($contact->phone) ? $contact->phone : null,
                                         'user_type'    => $contact_type,
                                     ]);
                                     $address_types = ['billing', 'shipping'];
