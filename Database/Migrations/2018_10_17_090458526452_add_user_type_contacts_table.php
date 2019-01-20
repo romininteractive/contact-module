@@ -12,9 +12,12 @@ class AddUserTypeContactsTable extends Migration
      */
     public function up()
     {
-        Schema::table('contact__contacts', function (Blueprint $table) {
-            $table->string('user_type')->nullable()->after('phone');
-        });
+        Schema::table(
+            'contact__contacts',
+            function (Blueprint $table) {
+                $table->string('user_type')->nullable()->after('phone');
+            }
+        );
     }
 
     /**

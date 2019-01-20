@@ -72,12 +72,15 @@ class ContactController extends AdminBaseController
             'billingphone'  => 'nullable|min:10',
         ];
 
-        if(setting('contact::shipping_details')){
-            $rules = array_merge($rules, [
+        if (setting('contact::shipping_details')) {
+            $rules = array_merge(
+                $rules,
+                [
                 'sname'         => 'required',
                 'saddress'      => 'nullable|min:3',
                 'sbillingphone' => 'nullable|min:10',
-            ]);
+                ]
+            );
         }
 
         $this->validate($request, $rules);
@@ -97,7 +100,7 @@ class ContactController extends AdminBaseController
         $contactaddresss->billingphone = $request->billingphone;
         $contactaddresss->save();
 
-        if(setting('contact::shipping_details')){
+        if (setting('contact::shipping_details')) {
             $shipping_details               = new ContactAddress();
             $shipping_details->contactId    = $contact->id;
             $shipping_details->type         = 'shipping';
@@ -115,7 +118,7 @@ class ContactController extends AdminBaseController
         $messages = trans('core::core.messages.resource created', ['name' => trans('contact::contacts.title.contacts')]);
 
         return redirect()->route('admin.contact.contact.index', ['type' => $contact->user_type])
-                ->withSuccess($messages);
+            ->withSuccess($messages);
     }
 
     /**
@@ -135,10 +138,11 @@ class ContactController extends AdminBaseController
         return view('contact::admin.contacts.edit', compact('contact', 'billingConatctAddress', 'shippingConatctAddress', 'contact_type', 'salutations'));
     }
 
-    /**contactAddress
+    /**
+     * contactAddress
      * Update the specified resource in storage.
      *
-     * @param  Contact $contact
+     * @param  Contact              $contact
      * @param  UpdateContactRequest $request
      * @return Response
      */
@@ -150,12 +154,15 @@ class ContactController extends AdminBaseController
             'billingphone'  => 'nullable|min:10',
         ];
 
-        if(setting('contact::shipping_details')){
-            $rules = array_merge($rules, [
+        if (setting('contact::shipping_details')) {
+            $rules = array_merge(
+                $rules,
+                [
                 'sname'         => 'required',
                 'saddress'      => 'nullable|min:3',
                 'sbillingphone' => 'nullable|min:10',
-            ]);
+                ]
+            );
         }
 
         $this->validate($request, $rules);
@@ -175,7 +182,7 @@ class ContactController extends AdminBaseController
         $billingConatctAddress->billingphone = $request->billingphone;
         $billingConatctAddress->save();
 
-        if(setting('contact::shipping_details')){        
+        if (setting('contact::shipping_details')) {
             $shippingConatctAddress = ContactAddress::where('contactId', $contact->id)->where('type', 'shipping')->first();
             $shippingConatctAddress->name         = $request->sname;
             $shippingConatctAddress->address      = $request->saddress;
@@ -232,7 +239,8 @@ class ContactController extends AdminBaseController
 
                             if ($type != null && $contact->first != null && $contact->last != null) {
                                 try {
-                                    $newcontact = Contact::firstOrCreate([
+                                    $newcontact = Contact::firstOrCreate(
+                                        [
                                         'salutation'   => 'ms',
                                         'first_name'   => $contact->first,
                                         'last_name'    => $contact->last,
@@ -240,10 +248,12 @@ class ContactController extends AdminBaseController
                                         'email'        => $contact->email,
                                         'phone'        => ($contact->phone) ? $contact->phone : null,
                                         'user_type'    => $contact_type,
-                                    ]);
+                                        ]
+                                    );
                                     $address_types = ['billing', 'shipping'];
                                     foreach ($address_types as $key => $value) {
-                                        $address_details = ContactAddress::firstOrCreate([
+                                        $address_details = ContactAddress::firstOrCreate(
+                                            [
                                             'contactId'    => $newcontact->id,
                                             'type'         => $value,
                                             'name'         => $newcontact->fullname,
@@ -253,14 +263,13 @@ class ContactController extends AdminBaseController
                                             'zip_code'     => $contact->postalzip_code,
                                             'country'      => $contact->country,
                                             'billingphone' => $contact->phone,
-                                        ]);
+                                            ]
+                                        );
                                     }
                                 } catch (\Exception $e) {
                                     dd($e);
                                     error_log($e);
-
                                 }
-
                             }
                             // }
                         }

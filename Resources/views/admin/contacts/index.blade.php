@@ -40,8 +40,8 @@
                             </tr>
                             </thead>
                             <tbody>
-                            <?php if (isset($contacts)): ?>
-                            <?php foreach ($contacts as $contact): ?>
+                            <?php if (isset($contacts)) : ?>
+                                <?php foreach ($contacts as $contact) : ?>
                             <tr>
                                 <td>{{ $contact->full_name }}<br/>
                                     <span class="label label-{{ $contact->typeClass() }}">{{ $contact->user_type }}</span>
@@ -59,7 +59,7 @@
                                     </div>
                                 </td>
                             </tr>
-                            <?php endforeach; ?>
+                                <?php endforeach; ?>
                             <?php endif; ?>
                             </tbody>
                             <tfoot>
@@ -96,7 +96,7 @@
         $( document ).ready(function() {
             $(document).keypressAction({
                 actions: [
-                    { key: 'c', route: "<?= route('admin.contact.contact.create') ?>" }
+                    { key: 'c', route: "<?php echo route('admin.contact.contact.create') ?>" }
                 ]
             });
         });

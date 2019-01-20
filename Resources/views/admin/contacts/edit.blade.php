@@ -60,7 +60,7 @@
         $( document ).ready(function() {
             $(document).keypressAction({
                 actions: [
-                    { key: 'b', route: "<?= route('admin.contact.contact.index') ?>" }
+                    { key: 'b', route: "<?php echo route('admin.contact.contact.index') ?>" }
                 ]
             });
         });

@@ -6,6 +6,7 @@ interface ContactInterface
 {
     /**
      * Checks if the user is in the given role.
+     *
      * @param  mixed $role
      * @return bool
      */

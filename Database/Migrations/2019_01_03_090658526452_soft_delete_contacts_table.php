@@ -12,10 +12,12 @@ class SoftDeleteContactsTable extends Migration
      */
     public function up()
     {
-        Schema::table('contact__contacts', function (Blueprint $table) {
-            $table->softDeletes();
-        });
-
+        Schema::table(
+            'contact__contacts',
+            function (Blueprint $table) {
+                $table->softDeletes();
+            }
+        );
     }
 
     /**

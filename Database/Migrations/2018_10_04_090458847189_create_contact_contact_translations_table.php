@@ -12,16 +12,19 @@ class CreateContactContactTranslationsTable extends Migration
      */
     public function up()
     {
-        Schema::create('contact__contact_translations', function (Blueprint $table) {
-            $table->engine = 'InnoDB';
-            $table->increments('id');
-            // Your translatable fields
+        Schema::create(
+            'contact__contact_translations',
+            function (Blueprint $table) {
+                $table->engine = 'InnoDB';
+                $table->increments('id');
+                // Your translatable fields
 
-            $table->integer('contact_id')->unsigned();
-            $table->string('locale')->index();
-            $table->unique(['contact_id', 'locale']);
-            $table->foreign('contact_id')->references('id')->on('contact__contacts')->onDelete('cascade');
-        });
+                $table->integer('contact_id')->unsigned();
+                $table->string('locale')->index();
+                $table->unique(['contact_id', 'locale']);
+                $table->foreign('contact_id')->references('id')->on('contact__contacts')->onDelete('cascade');
+            }
+        );
     }
 
     /**
@@ -31,9 +34,12 @@ class CreateContactContactTranslationsTable extends Migration
      */
     public function down()
     {
-        Schema::table('contact__contact_translations', function (Blueprint $table) {
-            $table->dropForeign(['contact_id']);
-        });
+        Schema::table(
+            'contact__contact_translations',
+            function (Blueprint $table) {
+                $table->dropForeign(['contact_id']);
+            }
+        );
         Schema::dropIfExists('contact__contact_translations');
     }
 }

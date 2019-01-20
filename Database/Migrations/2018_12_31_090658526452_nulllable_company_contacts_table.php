@@ -12,10 +12,12 @@ class NulllableCompanyContactsTable extends Migration
      */
     public function up()
     {
-        Schema::table('contact__contacts', function (Blueprint $table) {
-            $table->string('company_name')->nullable()->change();
-        });
-
+        Schema::table(
+            'contact__contacts',
+            function (Blueprint $table) {
+                $table->string('company_name')->nullable()->change();
+            }
+        );
     }
 
     /**

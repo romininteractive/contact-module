@@ -28,23 +28,24 @@ class ContactServiceProvider extends ServiceProvider
         $this->registerBindings();
         $this->app['events']->listen(BuildingSidebar::class, RegisterContactSidebar::class);
 
-        $this->app['events']->listen(LoadingBackendTranslations::class, function (LoadingBackendTranslations $event) {
-            $event->load('contacts', array_dot(trans('contact::contacts')));
-            $event->load('contactaddresses', array_dot(trans('contact::contactaddresses')));
-            // append translations
-
-
-        });
+        $this->app['events']->listen(
+            LoadingBackendTranslations::class,
+            function (LoadingBackendTranslations $event) {
+                $event->load('contacts', array_dot(trans('contact::contacts')));
+                $event->load('contactaddresses', array_dot(trans('contact::contactaddresses')));
+                // append translations
+            }
+        );
     }
 
     public function boot()
     {
-        require_once __DIR__.'/../includes/functions.php';
+        include_once __DIR__.'/../includes/functions.php';
 
         $this->publishConfig('contact', 'settings');
         $this->publishConfig('contact', 'permissions');
         $this->publishConfig('contact', 'contact-type');
-        $this->publishConfig('contact', 'barcode');        
+        $this->publishConfig('contact', 'barcode');
         $this->publishConfig('contact', 'user-salutation');
 
         $this->loadMigrationsFrom(__DIR__ . '/../Database/Migrations');
@@ -86,8 +87,6 @@ class ContactServiceProvider extends ServiceProvider
                 return new \Modules\Contact\Repositories\Cache\CacheContactAddressDecorator($repository);
             }
         );
-// add bindings
-
-
+        // add bindings
     }
 }

@@ -20,7 +20,7 @@ class Contact extends Model implements ContactInterface
     protected $table             = 'contact__contacts';
     public $translatedAttributes = [];
     protected $fillable          = ['salutation', 'first_name', 'last_name', 'company_name', 'email', 'phone', 'designation', 'gstin', 'department', 'type', 'user_type'];
-    protected $dates = ['deleted_at'];    
+    protected $dates = ['deleted_at'];
 
     public function vehicles()
     {
@@ -45,7 +45,7 @@ class Contact extends Model implements ContactInterface
     public function newnotification()
     {
         return $this->hasMany(Newnotification::class);
-    }    
+    }
 
     public function getName()
     {
@@ -72,7 +72,8 @@ class Contact extends Model implements ContactInterface
         return null;
     }
 
-    public function estimate(){
+    public function estimate()
+    {
         return $this->hasMany(Estimate::class);
     }
 

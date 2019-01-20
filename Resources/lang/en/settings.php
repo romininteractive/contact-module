@@ -1,5 +1,5 @@
 <?php
 
 return array(
-	'shipping_details' => 'Enable Shipping Details?',
+    'shipping_details' => 'Enable Shipping Details?',
 );

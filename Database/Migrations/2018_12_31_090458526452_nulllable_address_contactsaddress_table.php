@@ -12,11 +12,13 @@ class NulllableAddressContactsAddressTable extends Migration
      */
     public function up()
     {
-        Schema::table('contact__contactaddresses', function (Blueprint $table) {
-            $table->string('address')->nullable()->change();
-            $table->string('billingphone')->nullable()->change();            
-        });
-
+        Schema::table(
+            'contact__contactaddresses',
+            function (Blueprint $table) {
+                $table->string('address')->nullable()->change();
+                $table->string('billingphone')->nullable()->change();
+            }
+        );
     }
 
     /**

@@ -10,34 +10,34 @@ use Modules\Dashboard\Foundation\Widgets\BaseWidget;
  */
 class ContactsCountWidget extends BaseWidget
 {
-	private $contacts;
+    private $contacts;
 
-	public function __construct(ContactRepository $contacts)
-	{
-		$this->contacts = $contacts;
-	}
+    public function __construct(ContactRepository $contacts)
+    {
+        $this->contacts = $contacts;
+    }
 
-	public function name()
-	{
-		return 'ContactsCountWidget';
-	}
+    public function name()
+    {
+        return 'ContactsCountWidget';
+    }
 
-	public function options()
-	{
-		return [
-			'width' => 3,
-			'x' => 0,
-			'y' => 0,
-		];
-	}
+    public function options()
+    {
+        return [
+            'width' => 3,
+            'x' => 0,
+            'y' => 0,
+        ];
+    }
 
-	public function data()
-	{
-		return ['count' => $this->contacts->count()];
-	}
+    public function data()
+    {
+        return ['count' => $this->contacts->count()];
+    }
 
-	public function view()
-	{
-		return 'contact::admin.widgets.contacts-count';
-	}
+    public function view()
+    {
+        return 'contact::admin.widgets.contacts-count';
+    }
 }
