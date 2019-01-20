@@ -32,7 +32,7 @@
   </fieldset>
   </div>
 <div class="row">
-  <div class="col-sm-6">
+  <div class="col-sm-{{ (setting('product::shipping_details') ? 6 : 12) }}">
 	  <fieldset>
       <legend>Billing Detail:</legend>
 
@@ -54,48 +54,49 @@
     	        {!! Form::normalInput('fax', 'Fax', $errors,$billingConatctAddress, ['tabindex'=> '22']) !!}
     	         {!! Form::normalInput('billingphone', 'Phone', $errors,$billingConatctAddress, ['class' => 'form-control','maxlength' => 10, 'onkeypress' => 'return isNumber(event)','tabindex'=> '24']) !!}
     	     </fieldset>
-    	     </div>
+  </div>
+  @if(setting('product::shipping_details'))
   <div class="col-sm-6">
   	  <fieldset>
-    <legend>Shipping Detail:</legend>
-    <div class="form-group">
-          {!! Form::label('Name', 'Name') !!}
-          {!! Form::text('sname', $shippingConatctAddress->name, ['class' => 'form-control', 'required','tabindex'=> '11']) !!}
-  	<!-- {!! Form::normalInput('name', 'Name', $errors,$shippingConatctAddress) !!} -->
-    </div>
-    <div class="form-group">
-          {!! Form::label('Address', 'Address') !!}
-    	    {!! Form::text('saddress', $shippingConatctAddress->address, ['class' => 'form-control', 'required','tabindex'=> '13']) !!}
-    </div>
+        <legend>Shipping Detail:</legend>
+        <div class="form-group">
+              {!! Form::label('Name', 'Name') !!}
+              {!! Form::text('sname', $shippingConatctAddress->name, ['class' => 'form-control', 'required','tabindex'=> '11']) !!}
+      	<!-- {!! Form::normalInput('name', 'Name', $errors,$shippingConatctAddress) !!} -->
+        </div>
+        <div class="form-group">
+              {!! Form::label('Address', 'Address') !!}
+        	    {!! Form::text('saddress', $shippingConatctAddress->address, ['class' => 'form-control', 'required','tabindex'=> '13']) !!}
+        </div>
 
-    <div class="form-group">
-          {!! Form::label('Country', 'Country') !!}
-          {!! Form::text('scountry', $shippingConatctAddress->country, ['class' => 'form-control','tabindex'=> '21']) !!}
-    </div> 
-    <div class="form-group">
-          {!! Form::label('State', 'State') !!}
-          {!! Form::text('sstate', $shippingConatctAddress->state, ['class' => 'form-control','tabindex'=> '17']) !!}
-    </div>             
-    <div class="form-group">
-          {!! Form::label('City', 'City') !!}
-          {!! Form::text('scity', $shippingConatctAddress->city, ['class' => 'form-control','tabindex'=> '15']) !!}
-    <!-- {!! Form::normalInput('name', 'Name', $errors,$shippingConatctAddress) !!} -->
-    </div>         
-    <div class="form-group">
-          {!! Form::label('ZIP Code', 'ZIP Code') !!}
-          {!! Form::text('szip_code', $shippingConatctAddress->zip_code, ['class' => 'form-control','maxlength' => 6, 'onkeypress' => 'return isNumber(event)','tabindex'=> '19']) !!}
-    </div>
-       <div class="form-group">
-          {!! Form::label('Fax', 'Fax') !!}
-          {!! Form::text('sfax', $shippingConatctAddress->fax, ['class' => 'form-control','tabindex'=> '23']) !!}
-    </div>                         
-    <div class="form-group">
-          {!! Form::label('Phone', 'Phone') !!}
-          {!! Form::text('sbillingphone', $shippingConatctAddress->billingphone, ['class' => 'form-control','maxlength' => 10, 'onkeypress' => 'return isNumber(event)','tabindex'=> '25']) !!}
-    </div>                             
-    	    	</fieldset>
-    	    	</div>
-
+        <div class="form-group">
+              {!! Form::label('Country', 'Country') !!}
+              {!! Form::text('scountry', $shippingConatctAddress->country, ['class' => 'form-control','tabindex'=> '21']) !!}
+        </div> 
+        <div class="form-group">
+              {!! Form::label('State', 'State') !!}
+              {!! Form::text('sstate', $shippingConatctAddress->state, ['class' => 'form-control','tabindex'=> '17']) !!}
+        </div>             
+        <div class="form-group">
+              {!! Form::label('City', 'City') !!}
+              {!! Form::text('scity', $shippingConatctAddress->city, ['class' => 'form-control','tabindex'=> '15']) !!}
+        <!-- {!! Form::normalInput('name', 'Name', $errors,$shippingConatctAddress) !!} -->
+        </div>         
+        <div class="form-group">
+              {!! Form::label('ZIP Code', 'ZIP Code') !!}
+              {!! Form::text('szip_code', $shippingConatctAddress->zip_code, ['class' => 'form-control','maxlength' => 6, 'onkeypress' => 'return isNumber(event)','tabindex'=> '19']) !!}
+        </div>
+           <div class="form-group">
+              {!! Form::label('Fax', 'Fax') !!}
+              {!! Form::text('sfax', $shippingConatctAddress->fax, ['class' => 'form-control','tabindex'=> '23']) !!}
+        </div>                         
+        <div class="form-group">
+              {!! Form::label('Phone', 'Phone') !!}
+              {!! Form::text('sbillingphone', $shippingConatctAddress->billingphone, ['class' => 'form-control','maxlength' => 10, 'onkeypress' => 'return isNumber(event)','tabindex'=> '25']) !!}
+        </div>                             
+    	</fieldset>
+  </div>
+  @endif
 </div>
 
 <script type="text/javascript">

@@ -36,7 +36,7 @@
         </fieldset>
     </div>
     <div class="row" style="margin-top: 10px;">
-        <div class="col-sm-{{ (setting('product::setting_details') ? 6 : 12) }}">
+        <div class="col-sm-{{ (setting('product::shipping_details') ? 6 : 12) }}">
             <fieldset>
                 <legend>
                     Billing Details:
@@ -44,18 +44,18 @@
                 {!! Form::normalInput('name', 'Name', $errors, '', ['tabindex'=> '10']) !!}
                 {!! Form::normalInput('address', 'Address', $errors, '', ['tabindex'=> '12']) !!}
                 <div class='form-group'>
-                    {!! Form::label('country', 'country') !!}
-                    <select name="country" class="form-control" id="country">
+                    {!! Form::label('country', 'Country') !!}
+                    <select name="country" class="form-control" id="country" tabindex="14">
                     </select>
                 </div>                
                 <div class='form-group'>
-                    {!! Form::label('state', 'state') !!}
-                    <select name="state" class="form-control" id="state">
+                    {!! Form::label('state', 'State') !!}
+                    <select name="state" class="form-control" id="state" tabindex="16">
                     </select>
                 </div>
 
-                {!! Form::normalInput('city', 'City', $errors, '', ['tabindex'=> '14']) !!}
-                {!! Form::normalInput('zip_code', 'Zip Code', $errors, null, ['class' => 'form-control','maxlength' => 6, 'onkeypress' => 'return isNumber(event)','tabindex'=> '18']) !!}
+                {!! Form::normalInput('city', 'City', $errors, '', ['tabindex'=> '18']) !!}
+                {!! Form::normalInput('zip_code', 'Zip Code', $errors, null, ['class' => 'form-control','maxlength' => 6, 'onkeypress' => 'return isNumber(event)','tabindex'=> '20']) !!}
                 {!! Form::normalInput('fax', 'Fax', $errors, '', ['tabindex'=> '22']) !!}
                 {!! Form::normalInput('billingphone', 'Phone', $errors, null, ['class' => 'form-control','maxlength' => 10, 'onkeypress' => 'return isNumber(event)','tabindex'=> '24']) !!}
             </fieldset>
@@ -68,10 +68,10 @@
                 </legend>
                 {!! Form::normalInput('sname', 'Name', $errors, '', ['tabindex'=> '11']) !!}
                 {!! Form::normalInput('saddress', 'Address', $errors, '', ['tabindex'=> '13']) !!}
-                {!! Form::normalInput('scountry', 'Country', $errors, '', ['tabindex'=> '21']) !!}
+                {!! Form::normalInput('scountry', 'Country', $errors, '', ['tabindex'=> '15']) !!}
                 {!! Form::normalInput('sstate', 'State', $errors, '', ['tabindex'=> '17']) !!}
-                {!! Form::normalInput('scity', 'City', $errors, '', ['tabindex'=> '15']) !!}
-                {!! Form::normalInput('szip_code', 'Zip Code', $errors, null, ['class' => 'form-control','maxlength' => 6, 'onkeypress' => 'return isNumber(event)','tabindex'=> '19']) !!}
+                {!! Form::normalInput('scity', 'City', $errors, '', ['tabindex'=> '19']) !!}
+                {!! Form::normalInput('szip_code', 'Zip Code', $errors, null, ['class' => 'form-control','maxlength' => 6, 'onkeypress' => 'return isNumber(event)','tabindex'=> '21']) !!}
                 {!! Form::normalInput('sfax', 'Fax', $errors, '', ['tabindex'=> '23']) !!}
                 {!! Form::normalInput('sbillingphone', 'Phone', $errors, null, ['class' => 'form-control','maxlength' => 10, 'onkeypress' => 'return isNumber(event)','tabindex'=> '25']) !!}
             </fieldset>

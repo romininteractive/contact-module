@@ -13,7 +13,7 @@ class UpdateContactRequest extends BaseFormRequest
             'first_name'   => 'required',
             'last_name'    => 'required',
             'email'        => 'nullable|email',
-            'phone'        => 'numeric|digits:10',
+            'phone'        => 'nullable|numeric|digits:10',
             'gstin'        => 'nullable|regex:/^([0-9]){2}([a-zA-Z]){5}([0-9]){4}([a-zA-Z]){1}([0-9]){1}([a-zA-Z1-9]){1}([a-zA-Z0-9]){1}$/',
         ];
     }

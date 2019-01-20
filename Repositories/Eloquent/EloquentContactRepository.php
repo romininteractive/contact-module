@@ -7,4 +7,8 @@ use Modules\Core\Repositories\Eloquent\EloquentBaseRepository;
 
 class EloquentContactRepository extends EloquentBaseRepository implements ContactRepository
 {
+	public function count()
+	{
+		return $this->model->count();
+	}
 }

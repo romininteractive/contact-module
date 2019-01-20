@@ -111,7 +111,7 @@ class ContactController extends AdminBaseController
             $shipping_details->save();
         }
 
-        return redirect()->route('admin.contact.contact.index')
+        return redirect()->route('admin.contact.contact.index', ['type' => $contact->type])
             ->withSuccess(trans('core::core.messages.resource created', ['name' => trans('contact::contacts.title.contacts')]));
     }
 
@@ -185,7 +185,7 @@ class ContactController extends AdminBaseController
             $shippingConatctAddress->save();
         }
 
-        return redirect()->route('admin.contact.contact.index')
+        return redirect()->route('admin.contact.contact.index', ['type' => $contact->type])
             ->withSuccess(trans('core::core.messages.resource updated', ['name' => trans('contact::contacts.title.contacts')]));
     }
 
