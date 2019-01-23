@@ -16,6 +16,13 @@ class ContactsTable extends Table
         'phone'
     ];
 
+    public function __construct($module)
+    {
+        parent::__construct($module);
+
+        $this->columns = config('asgard.contact.config.table_columns');
+    }
+
     public function getRecords()
     {
         if (!request()->type) {

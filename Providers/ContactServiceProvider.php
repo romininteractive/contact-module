@@ -42,6 +42,7 @@ class ContactServiceProvider extends ServiceProvider
     {
         include_once __DIR__.'/../includes/functions.php';
 
+        $this->publishConfig('contact', 'config');
         $this->publishConfig('contact', 'settings');
         $this->publishConfig('contact', 'permissions');
         $this->publishConfig('contact', 'contact-type');
