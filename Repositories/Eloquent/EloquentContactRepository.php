@@ -14,4 +14,9 @@ class EloquentContactRepository extends EloquentBaseRepository implements Contac
     {
         return $this->model->count();
     }
+
+    public function where(array $attributes)
+    {
+        return $this->model->where($attributes);
+    }
 }

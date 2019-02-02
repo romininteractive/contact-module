@@ -23,14 +23,14 @@ class ContactsTable extends Table
         $this->columns = config('asgard.contact.config.table_columns');
     }
 
-    public function getRecords()
+    public function getBuilder()
     {
-        if (!request()->type) {
-            $contacts = $this->getRepository()->all();
-        } else {
-            $contacts = $this->getRepository()->getByAttributes(['user_type' => request()->type]);
+        $builder = parent::getBuilder();
+
+        if(request()->has('type')){
+            $builder = $this->getRepository()->where(['type' => request()->get('type')]);
         }
 
-        return $contacts;
+        return $builder;
     }
 }

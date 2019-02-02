@@ -4,10 +4,10 @@
     "type": "asgard-module",
     "license": "MIT",
     "require": {
-        "romininteractive/rarv": "dev-master",
         "php": ">=7.0.0",
         "composer/installers": "~1.0",
         "idavoll/core-module": "~3.0",
+        "romininteractive/rarv": "dev-master",
         "maatwebsite/excel": "~2"
     },
     "require-dev": {
