@@ -6,6 +6,7 @@ namespace Modules\Contact\Entities;
 use Dimsav\Translatable\Translatable;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Notifications\Notifiable;
+use Modules\Contact\Entities\ContactAddress;
 use Modules\Contact\Entities\Vehicle;
 use Modules\Estimate\Entities\Estimate;
 use Modules\Newnotification\Entities\Newnotification;
@@ -73,4 +74,33 @@ class Contact extends Model implements ContactInterface
     public function estimate(){
         return $this->hasMany(Estimate::class);
     }
+
+    public static function fieldValues($type)
+    {
+        $contacts = self::whereUserType($type)->get();
+        $data = [];
+
+        foreach ($contacts as &$contact) {
+            $data[$contact->id] = $contact->full_name;
+        }
+
+        return $data;
+    }
+
+    public function typeClass()
+    {
+        switch ($this->user_type) {
+            case 'customer':
+                return 'success';
+                break;
+
+            case 'vendor':
+                return 'warning';
+                break;
+            
+            default:
+                return 'info';
+                break;
+        }
+    }    
 }
