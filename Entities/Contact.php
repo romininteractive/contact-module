@@ -103,4 +103,13 @@ class Contact extends Model implements ContactInterface
                 break;
         }
     }    
+    public function getFullNamePhoneAttribute($value)
+    {
+        if($this->phone !=null){
+            return ucfirst($this->first_name) . ' ' . $this->last_name .' - ' . $this->phone;
+        }else{            
+            return ucfirst($this->first_name) . ' ' . $this->last_name;
+        }
+    }    
 }
+
