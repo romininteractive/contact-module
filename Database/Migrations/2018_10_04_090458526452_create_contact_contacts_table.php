@@ -12,22 +12,25 @@ class CreateContactContactsTable extends Migration
      */
     public function up()
     {
-        Schema::create('contact__contacts', function (Blueprint $table) {
-            $table->engine = 'InnoDB';
-            $table->increments('id');
-             $table->string('salutation');
-            $table->string('first_name');
-            $table->string('last_name');
-            $table->string('company_name');
-            $table->string('email');
-            $table->string('phone');
-            $table->string('designation');
-            $table->string('department');
-            $table->string('type');
-             $table->string('gstin');
-            // Your fields
-            $table->timestamps();
-        });
+        Schema::create(
+            'contact__contacts',
+            function (Blueprint $table) {
+                $table->engine = 'InnoDB';
+                $table->increments('id');
+                $table->string('salutation');
+                $table->string('first_name');
+                $table->string('last_name');
+                $table->string('company_name');
+                $table->string('email');
+                $table->string('phone');
+                $table->string('designation');
+                $table->string('department');
+                $table->string('type');
+                $table->string('gstin');
+                // Your fields
+                $table->timestamps();
+            }
+        );
     }
 
     /**

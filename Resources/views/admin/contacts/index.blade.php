@@ -13,11 +13,15 @@
 @section('content')
     <div class="row">
         <div class="col-xs-12">
+            <ri-hello name="Tirth"></ri-hello>
             <div class="row">
                 <div class="btn-group pull-right" style="margin: 0 15px 15px 0;">
+                    <a href="{{ route('admin.contact.contact.create') }}" class="btn btn-success btn-flat" style="padding: 4px 10px;">
+                        <i class="fa fa-pencil"></i> Import Contact 
+                    </a>
                     <a href="{{ route('admin.contact.contact.create') }}" class="btn btn-primary btn-flat" style="padding: 4px 10px;">
                         <i class="fa fa-pencil"></i> {{ trans('contact::contacts.button.create contact') }}
-                    </a>
+                    </a>                    
                 </div>
             </div>
             <div class="box box-primary">
@@ -36,10 +40,12 @@
                             </tr>
                             </thead>
                             <tbody>
-                            <?php if (isset($contacts)): ?>
-                            <?php foreach ($contacts as $contact): ?>
+                            <?php if (isset($contacts)) : ?>
+                                <?php foreach ($contacts as $contact) : ?>
                             <tr>
-                                <td>{{ $contact->first_name }}  {{ $contact->last_name }}</td>
+                                <td>{{ $contact->full_name }}<br/>
+                                    <span class="label label-{{ $contact->typeClass() }}">{{ $contact->user_type }}</span>
+                                </td>
                                 <td>{{ $contact->email }}</td>
                                 <td>
                                     <a href="{{ route('admin.contact.contact.edit', [$contact->id]) }}">
@@ -53,7 +59,7 @@
                                     </div>
                                 </td>
                             </tr>
-                            <?php endforeach; ?>
+                                <?php endforeach; ?>
                             <?php endif; ?>
                             </tbody>
                             <tfoot>
@@ -90,7 +96,7 @@
         $( document ).ready(function() {
             $(document).keypressAction({
                 actions: [
-                    { key: 'c', route: "<?= route('admin.contact.contact.create') ?>" }
+                    { key: 'c', route: "<?php echo route('admin.contact.contact.create') ?>" }
                 ]
             });
         });

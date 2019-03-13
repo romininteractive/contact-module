@@ -34,8 +34,8 @@
                             </tr>
                             </thead>
                             <tbody>
-                            <?php if (isset($contactaddresses)): ?>
-                            <?php foreach ($contactaddresses as $contactaddress): ?>
+                            <?php if (isset($contactaddresses)) : ?>
+                                <?php foreach ($contactaddresses as $contactaddress) : ?>
                             <tr>
                                 <td>
                                     <a href="{{ route('admin.contact.contactaddress.edit', [$contactaddress->id]) }}">
@@ -49,7 +49,7 @@
                                     </div>
                                 </td>
                             </tr>
-                            <?php endforeach; ?>
+                                <?php endforeach; ?>
                             <?php endif; ?>
                             </tbody>
                             <tfoot>
@@ -84,7 +84,7 @@
         $( document ).ready(function() {
             $(document).keypressAction({
                 actions: [
-                    { key: 'c', route: "<?= route('admin.contact.contactaddress.create') ?>" }
+                    { key: 'c', route: "<?php echo route('admin.contact.contactaddress.create') ?>" }
                 ]
             });
         });

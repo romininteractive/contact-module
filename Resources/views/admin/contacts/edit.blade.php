@@ -12,8 +12,10 @@
 @stop
 
 @section('content')
-    {!! Form::open(['route' => ['admin.contact.contact.update', $contact->id], 'method' => 'put']) !!}
+    {!! Form::open(['route' => ['admin.contact.contacts.update', $contact->id], 'method' => 'put']) !!}
     <div class="row">
+        <input type="hidden" name="country_name" id="country_name" value="<?php echo $billingConatctAddress->country; ?>">
+        <input type="hidden" name="state_name" id="state_name" value="<?php echo $billingConatctAddress->state; ?>">        
         <div class="col-md-12">
             <div class="nav-tabs-custom">
                 @include('partials.form-tab-headers')
@@ -48,11 +50,17 @@
 @stop
 
 @push('js-stack')
+<script type="text/javascript" src="{{ asset('modules/rarv/js/countries.js') }}"></script>
     <script type="text/javascript">
+        $(document).ready(function(){
+            var count_val = $('#country_name').val();
+            var state_val = $('#state_name').val();
+            populateCountries("country", "state" ,count_val, state_val);        
+        });    
         $( document ).ready(function() {
             $(document).keypressAction({
                 actions: [
-                    { key: 'b', route: "<?= route('admin.contact.contact.index') ?>" }
+                    { key: 'b', route: "<?php echo route('admin.contact.contact.index') ?>" }
                 ]
             });
         });
@@ -65,4 +73,56 @@
             });
         });
     </script>
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $("#name").keyup(function () {
+                var value = $(this).val();
+                $("#sname").val(value);
+            });
+        });
+        $(document).ready(function () {
+            $("#address").keyup(function () {
+                var value = $(this).val();
+                $("#saddress").val(value);
+            });
+        });
+        $(document).ready(function () {
+            $("#city").keyup(function () {
+                var value = $(this).val();
+                $("#scity").val(value);
+            });
+        });
+        $(document).ready(function () {
+            $("#state").keyup(function () {
+                var value = $(this).val();
+                $("#sstate").val(value);
+            });
+        });
+         $(document).ready(function () {
+            $("#zip_code").keyup(function () {
+                var value = $(this).val();
+                $("#szip_code").val(value);
+            });
+        });
+         $(document).ready(function () {
+            $("#country").keyup(function () {
+                var value = $(this).val();
+                $("#scountry").val(value);
+            });
+        });
+         $(document).ready(function () {
+            $("#fax").keyup(function () {
+                var value = $(this).val();
+                $("#sfax").val(value);
+            });
+        });
+         $(document).ready(function () {
+            $("#billingphone").keyup(function () {
+                var value = $(this).val();
+                $("#sbillingphone").val(value);
+            });
+        });
+    </script>
+
 @endpush
