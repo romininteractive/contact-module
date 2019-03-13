@@ -7,6 +7,7 @@ use Dimsav\Translatable\Translatable;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Notifications\Notifiable;
+use Modules\Contact\Entities\ContactAddress;
 use Modules\Contact\Entities\Vehicle;
 use Modules\Estimate\Entities\Estimate;
 use Modules\Newnotification\Entities\Newnotification;
@@ -104,5 +105,14 @@ class Contact extends Model implements ContactInterface
                 return 'info';
                 break;
         }
-    }
+    }    
+    public function getFullNamePhoneAttribute($value)
+    {
+        if($this->phone !=null){
+            return ucfirst($this->first_name) . ' ' . $this->last_name .' - ' . $this->phone;
+        }else{            
+            return ucfirst($this->first_name) . ' ' . $this->last_name;
+        }
+    }    
 }
+
