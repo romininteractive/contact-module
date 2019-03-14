@@ -6,4 +6,7 @@ use Modules\Core\Repositories\BaseRepository;
 
 interface ContactRepository extends BaseRepository
 {
+    public function count();
+
+    public function where(array $attributes);
 }

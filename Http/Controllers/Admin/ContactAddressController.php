@@ -74,7 +74,7 @@ class ContactAddressController extends AdminBaseController
     /**
      * Update the specified resource in storage.
      *
-     * @param  ContactAddress $contactaddress
+     * @param  ContactAddress              $contactaddress
      * @param  UpdateContactAddressRequest $request
      * @return Response
      */

@@ -52,7 +52,7 @@
         $( document ).ready(function() {
             $(document).keypressAction({
                 actions: [
-                    { key: 'b', route: "<?= route('admin.contact.contactaddress.index') ?>" }
+                    { key: 'b', route: "<?php echo route('admin.contact.contactaddress.index') ?>" }
                 ]
             });
         });

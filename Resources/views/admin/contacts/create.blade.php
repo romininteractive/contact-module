@@ -12,7 +12,7 @@
 @stop
 
 @section('content')
-    {!! Form::open(['route' => ['admin.contact.contact.store'], 'method' => 'post']) !!}
+    {!! Form::open(['route' => ['admin.contact.contacts.store'], 'method' => 'post']) !!}
     <div class="row">
         <div class="col-md-12">
             <div class="nav-tabs-custom">
@@ -48,11 +48,16 @@
 @stop
 
 @push('js-stack')
+<script type="text/javascript" src="{{ asset('modules/rarv/js/countries.js') }}"></script>
+
     <script type="text/javascript">
+    $(document).ready(function(){
+        populateCountries("country", "state");        
+    });        
         $( document ).ready(function() {
             $(document).keypressAction({
                 actions: [
-                    { key: 'b', route: "<?= route('admin.contact.contact.index') ?>" }
+                    { key: 'b', route: "<?php echo route('admin.contact.contact.index') ?>" }
                 ]
             });
         });
@@ -68,35 +73,56 @@
 
     <script type="text/javascript">
         $(document).ready(function () {
-            $("#name").keyup(function () {
+            $("#name").change(function () {
                 var value = $(this).val();
                 $("#sname").val(value);
             });
-            $("#address").keyup(function () {
+            $("#address").change(function () {
                 var value = $(this).val();
                 $("#saddress").val(value);
             });
-            $("#city").keyup(function () {
+            $("#city").change(function () {
                 var value = $(this).val();
                 $("#scity").val(value);
             });
-            $("#state").keyup(function () {
+            $("#state").change(function () {
                 var value = $(this).val();
                 $("#sstate").val(value);
             });
-            $("#zip_code").keyup(function () {
+            $("#zip_code").change(function () {
                 var value = $(this).val();
                 $("#szip_code").val(value);
             });
-            $("#country").keyup(function () {
+            $("#country").change(function () {
                 var value = $(this).val();
                 $("#scountry").val(value);
             });
-            $("#fax").keyup(function () {
+            $("#fax").change(function () {
                 var value = $(this).val();
                 $("#sfax").val(value);
             });
-            $("#billingphone").keyup(function () {
+
+            $("#first_name").change(function(){
+                var firstName = $(this).val();
+
+                $("#name").val(firstName);
+                $("#sname").val(firstName);
+            });
+            $("#last_name").change(function(){
+                var lastName = $(this).val();
+
+                $("#name").val($("#first_name").val() + ' ' + lastName);
+                $("#sname").val($("#first_name").val() + ' ' + lastName);
+            });
+
+            $("#phone").change(function(){
+                var val = $(this).val();
+
+                $("#billingphone").val(val);
+                $("#sbillingphone").val(val);
+            });
+
+            $("#billingphone").change(function () {
                 var value = $(this).val();
                 $("#sbillingphone").val(value);
             });

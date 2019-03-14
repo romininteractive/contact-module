@@ -16,6 +16,6 @@
     ],
     "widgets": [
         "Modules\\Contact\\Widgets\\ContactsCountWidget"
-    ],    
+    ],
     "requires": []
 }

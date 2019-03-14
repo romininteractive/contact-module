@@ -2,17 +2,21 @@
 
 @section('content-header')
     <h1>
-        {{ trans('contact::contactaddresses.title.edit contactaddress') }}
+        Import contact
     </h1>
     <ol class="breadcrumb">
         <li><a href="{{ route('dashboard.index') }}"><i class="fa fa-dashboard"></i> {{ trans('core::core.breadcrumb.home') }}</a></li>
-        <li><a href="{{ route('admin.contact.contactaddress.index') }}">{{ trans('contact::contactaddresses.title.contactaddresses') }}</a></li>
-        <li class="active">{{ trans('contact::contactaddresses.title.edit contactaddress') }}</li>
+        <li>
+            <a href="{{ route('admin.contact.contact.index') }}">
+                {{ trans('contact::contacts.title.contacts') }}
+            </a>
+        </li>
+        <li class="active">Import contact</li>
     </ol>
 @stop
 
 @section('content')
-    {!! Form::open(['route' => ['admin.contact.contactaddress.update', $contactaddress->id], 'method' => 'put']) !!}
+    {!! Form::open(['route' => ['admin.contact.postimport'],'files' => true,  'method' => 'post', 'enctype'=>'multipart/form-data']) !!}
     <div class="row">
         <div class="col-md-12">
             <div class="nav-tabs-custom">
@@ -22,13 +26,19 @@
                     @foreach (LaravelLocalization::getSupportedLocales() as $locale => $language)
                         <?php $i++; ?>
                         <div class="tab-pane {{ locale() == $locale ? 'active' : '' }}" id="tab_{{ $i }}">
-                            @include('contact::admin.contactaddresses.partials.edit-fields', ['lang' => $locale])
+                            <div class="box-body">
+                                <input required name="contact" id="contact" type="file">                            
+                            </div>
                         </div>
                     @endforeach
 
                     <div class="box-footer">
-                        <button type="submit" class="btn btn-primary btn-flat">{{ trans('core::core.button.update') }}</button>
-                        <a class="btn btn-danger pull-right btn-flat" href="{{ route('admin.contact.contactaddress.index')}}"><i class="fa fa-times"></i> {{ trans('core::core.button.cancel') }}</a>
+                        <button type="submit" class="btn btn-primary btn-flat">
+                            {{ trans('contact::contacts.button.import') }}
+                        </button>
+                        <a class="btn btn-danger pull-right btn-flat" href="{{ route('admin.contact.contact.index')}}">
+                            <i class="fa fa-times"></i> {{ trans('core::core.button.cancel') }}
+                        </a>
                     </div>
                 </div>
             </div> {{-- end nav-tabs-custom --}}
@@ -52,7 +62,7 @@
         $( document ).ready(function() {
             $(document).keypressAction({
                 actions: [
-                    { key: 'b', route: "<?php echo route('admin.contact.contactaddress.index') ?>" }
+                    { key: 'b', route: "<?php echo route('admin.contact.contact.index') ?>" }
                 ]
             });
         });

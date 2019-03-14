@@ -1,24 +1,35 @@
 <?php
 
 return [
-    'list resource' => 'List contacts',
-    'create resource' => 'Create contacts',
-    'edit resource' => 'Edit contacts',
+    'list resource'    => 'List contacts',
+    'create resource'  => 'Create contacts',
+    'edit resource'    => 'Edit contacts',
     'destroy resource' => 'Destroy contacts',
-    'title' => [
-        'contacts' => 'Contact',
+    'title'            => [
+        'contacts'       => 'Contact',
+        'create contact' => 'Add Contact',
+        'edit contact'   => 'Edit a contact',
+        'customers'      => 'Customers',
+        'customer'       => 'Customer',
+        'vendors'        => 'Vendors',
+        'vendor'         => 'Vendor',
+        'import'        => 'Import',
+    ],
+    'button'           => [
         'create contact' => 'Create a contact',
-        'edit contact' => 'Edit a contact',
+        'import' => 'Import Now',
     ],
-    'button' => [
-        'create contact' => 'Create a contact',
+    'table'            => [
+        'columns' => [
+            'full_name' => 'Full Name',
+            'email' => 'Email',
+            'phone' => 'Phone Number',
+        ],
     ],
-    'table' => [
+    'form'             => [
     ],
-    'form' => [
+    'messages'         => [
     ],
-    'messages' => [
-    ],
-    'validation' => [
+    'validation'       => [
     ],
 ];

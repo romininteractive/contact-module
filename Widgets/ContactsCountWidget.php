@@ -1,6 +1,5 @@
 <?php
 
-namespace Modules\Contact\Entities;
 namespace Modules\Contact\Widgets;
 
 use Modules\Contact\Repositories\ContactRepository;

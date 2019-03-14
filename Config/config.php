@@ -1,5 +1,6 @@
 <?php
 
 return [
-    'name' => 'Contact'
+    'name' => 'Contact',
+    'table_columns' => ['full_name', 'email', 'phone'],
 ];

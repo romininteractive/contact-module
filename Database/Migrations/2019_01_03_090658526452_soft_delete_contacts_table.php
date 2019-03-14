@@ -1,9 +1,9 @@
 <?php
 
-use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
 
-class AddUserTypeContactsTable extends Migration
+class SoftDeleteContactsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -15,7 +15,7 @@ class AddUserTypeContactsTable extends Migration
         Schema::table(
             'contact__contacts',
             function (Blueprint $table) {
-                $table->string('user_type')->nullable()->after('phone');
+                $table->softDeletes();
             }
         );
     }
@@ -27,6 +27,6 @@ class AddUserTypeContactsTable extends Migration
      */
     public function down()
     {
-        Schema::dropColumn('user_type');
+        $table->dropColumn('deleted_at');
     }
 }

@@ -13,7 +13,7 @@ return [
         'edit' => 'contact::contactaddresses.edit resource',
         'destroy' => 'contact::contactaddresses.destroy resource',
     ],
-// append
+    // append
 
 
 ];

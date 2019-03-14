@@ -1,12 +1,14 @@
 {
     "name": "romininteractive/contact-module",
-    "type": "asgard-module",
     "description": "",
+    "type": "asgard-module",
     "license": "MIT",
     "require": {
         "php": ">=7.0.0",
         "composer/installers": "~1.0",
-        "idavoll/core-module": "~3.0"
+        "idavoll/core-module": "~3.0",
+        "romininteractive/rarv": "dev-master",
+        "maatwebsite/excel": "~2"
     },
     "require-dev": {
         "phpunit/phpunit": "~6.0",
@@ -18,27 +20,21 @@
             "Modules\\": "Modules/"
         }
     },
-    "minimum-stability": "dev",
+    "minimum-stability": "stable",
     "prefer-stable": true,
-    "authors": [
-        {
-            "name": "Nicolas Widart",
-            "email": "n.widart@gmail.com"
-        }
-    ],
+    "authors": [{
+        "name": "Mahesh Baliya",
+        "email": "mbaliya26@gmail.com"
+    }],
     "extra": {
         "laravel": {
-            "providers": [
-                "Modules\\Contact\\Providers\\ContactServiceProvider"
-            ],
-            "aliases": {
-                
-            }
+            "providers": ["Modules\\Contact\\Providers\\ContactServiceProvider"],
+            "aliases": {}
         }
     },
     "autoload": {
         "psr-4": {
-            "Modules\\Contact\\": "."
+            "Modules\\Contact\\": ""
         }
     }
 }

@@ -6,6 +6,7 @@ interface ContactInterface
 {
     /**
      * Checks if the user is in the given role.
+     *
      * @param  mixed $role
      * @return bool
      */
@@ -13,7 +14,7 @@ interface ContactInterface
     /**
      * Return the user's mobile number
      */
-    public function getPhone();
+    public function mobileNo();
     /**
      * Return the user's email address
      */
