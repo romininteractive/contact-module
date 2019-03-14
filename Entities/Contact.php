@@ -73,4 +73,16 @@ class Contact extends Model implements ContactInterface
     public function estimate(){
         return $this->hasMany(Estimate::class);
     }
+
+    public static function fieldValues($type)
+    {
+        $contacts = self::whereUserType($type)->get();
+        $data = [];
+
+        foreach ($contacts as &$contact) {
+            $data[$contact->id] = $contact->full_name;
+        }
+
+        return $data;
+    }    
 }
