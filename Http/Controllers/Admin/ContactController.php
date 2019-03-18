@@ -2,6 +2,7 @@
 
 namespace Modules\Contact\Http\Controllers\Admin;
 
+use DB;
 use Excel;
 use Illuminate\Foundation\Validation\ValidatesRequests;
 use Illuminate\Http\Request;
@@ -13,6 +14,7 @@ use Modules\Contact\Http\Requests\UpdateContactRequest;
 use Modules\Contact\Repositories\ContactRepository;
 use Modules\Contact\Tables\ContactsTable;
 use Modules\Core\Http\Controllers\Admin\AdminBaseController;
+use Modules\Product\Repositories\ProductRepository;
 use Modules\Rarv\Table\TableBuilder;
 use Nwidart\Modules\config;
 
@@ -25,11 +27,12 @@ class ContactController extends AdminBaseController
      */
     private $contact;
 
-    public function __construct(ContactRepository $contact)
+    public function __construct(ContactRepository $contact, ProductRepository $product)
     {
         parent::__construct();
 
         $this->contact = $contact;
+        $this->product = $product;
     }
 
     /**
@@ -67,18 +70,18 @@ class ContactController extends AdminBaseController
         $input = $request->all();
 
         $rules = [
-            'name'          => 'required',
-            'address'       => 'nullable|min:3',
-            'billingphone'  => 'nullable|min:10',
+            'name'         => 'required',
+            'address'      => 'nullable|min:3',
+            'billingphone' => 'nullable|min:10',
         ];
 
         if (setting('contact::shipping_details')) {
             $rules = array_merge(
                 $rules,
                 [
-                'sname'         => 'required',
-                'saddress'      => 'nullable|min:3',
-                'sbillingphone' => 'nullable|min:10',
+                    'sname'         => 'required',
+                    'saddress'      => 'nullable|min:3',
+                    'sbillingphone' => 'nullable|min:10',
                 ]
             );
         }
@@ -149,18 +152,18 @@ class ContactController extends AdminBaseController
     public function update(Contact $contact, UpdateContactRequest $request)
     {
         $rules = [
-            'name'          => 'required',
-            'address'       => 'nullable|min:3',
-            'billingphone'  => 'nullable|min:10',
+            'name'         => 'required',
+            'address'      => 'nullable|min:3',
+            'billingphone' => 'nullable|min:10',
         ];
 
         if (setting('contact::shipping_details')) {
             $rules = array_merge(
                 $rules,
                 [
-                'sname'         => 'required',
-                'saddress'      => 'nullable|min:3',
-                'sbillingphone' => 'nullable|min:10',
+                    'sname'         => 'required',
+                    'saddress'      => 'nullable|min:3',
+                    'sbillingphone' => 'nullable|min:10',
                 ]
             );
         }
@@ -170,7 +173,6 @@ class ContactController extends AdminBaseController
         $contact = $this->contact->update($contact, $request->all());
 
         $billingConatctAddress = ContactAddress::where('contactId', $contact->id)->where('type', 'billing')->first();
-
 
         $billingConatctAddress->name         = $request->name;
         $billingConatctAddress->address      = $request->address;
@@ -183,7 +185,7 @@ class ContactController extends AdminBaseController
         $billingConatctAddress->save();
 
         if (setting('contact::shipping_details')) {
-            $shippingConatctAddress = ContactAddress::where('contactId', $contact->id)->where('type', 'shipping')->first();
+            $shippingConatctAddress               = ContactAddress::where('contactId', $contact->id)->where('type', 'shipping')->first();
             $shippingConatctAddress->name         = $request->sname;
             $shippingConatctAddress->address      = $request->saddress;
             $shippingConatctAddress->city         = $request->scity;
@@ -199,6 +201,46 @@ class ContactController extends AdminBaseController
 
         return redirect()->route('admin.contact.contact.index', ['type' => $contact->user_type])
             ->withSuccess($message);
+    }
+
+    public function show(Contact $contact)
+    {
+
+        $invoices          = null;
+        $bills             = null;
+        $customer_products = null;
+
+        $type                   = $contact->user_type;
+        $billingConatctAddress  = ContactAddress::where('contactId', $contact->id)->where('type', 'billing')->first();
+        $shippingConatctAddress = ContactAddress::where('contactId', $contact->id)->where('type', 'shipping')->first();
+        $contact_type           = config('asgard.contact.contact-type');
+        $salutations            = config('asgard.contact.user-salutation');
+
+        if ($contact->user_type == 'customer') {
+            $invoices          = $contact->invoices()->get();
+            $customer_products = DB::table('contact__contacts')
+                ->where('accounting__invoices.customer_id', $contact->id)
+                ->join('accounting__invoices', 'contact__contacts.id', 'accounting__invoices.customer_id')
+                ->join('accounting__invoiceitems', 'accounting__invoices.id', 'accounting__invoiceitems.invoice_id')
+                ->join('product__products', 'accounting__invoiceitems.item_id', 'product__products.id')
+                ->select('accounting__invoiceitems.*')
+                ->get();
+
+        }
+
+        if ($contact->user_type == 'vendor') {
+            $bills = $contact->bills()->get();
+
+            $customer_products = DB::table('contact__contacts')
+                ->where('accounting__bills.vendor_id', $contact->id)
+                ->join('accounting__bills', 'contact__contacts.id', 'accounting__bills.vendor_id')
+                ->join('accounting__billitems', 'accounting__bills.id', 'accounting__billitems.bill_id')
+                ->join('product__products', 'accounting__billitems.item_id', 'product__products.id')
+                ->select('accounting__billitems.*')
+                ->get();
+        }
+        return view('contact::admin.contacts.show', compact('contact', 'billingConatctAddress', 'shippingConatctAddress', 'contact_type', 'salutations', 'invoices', 'type', 'customer_products', 'bills'));
+
     }
 
     /**
@@ -241,28 +283,28 @@ class ContactController extends AdminBaseController
                                 try {
                                     $newcontact = Contact::firstOrCreate(
                                         [
-                                        'salutation'   => 'ms',
-                                        'first_name'   => $contact->first,
-                                        'last_name'    => $contact->last,
-                                        'company_name' => $contact->name,
-                                        'email'        => $contact->email,
-                                        'phone'        => ($contact->phone) ? $contact->phone : null,
-                                        'user_type'    => $contact_type,
+                                            'salutation'   => 'ms',
+                                            'first_name'   => $contact->first,
+                                            'last_name'    => $contact->last,
+                                            'company_name' => $contact->name,
+                                            'email'        => $contact->email,
+                                            'phone'        => ($contact->phone) ? $contact->phone : null,
+                                            'user_type'    => $contact_type,
                                         ]
                                     );
                                     $address_types = ['billing', 'shipping'];
                                     foreach ($address_types as $key => $value) {
                                         $address_details = ContactAddress::firstOrCreate(
                                             [
-                                            'contactId'    => $newcontact->id,
-                                            'type'         => $value,
-                                            'name'         => $newcontact->fullname,
-                                            'address'      => $contact->street_address,
-                                            'city'         => $contact->city,
-                                            'state'        => $contact->stateprovince,
-                                            'zip_code'     => $contact->postalzip_code,
-                                            'country'      => $contact->country,
-                                            'billingphone' => $contact->phone,
+                                                'contactId'    => $newcontact->id,
+                                                'type'         => $value,
+                                                'name'         => $newcontact->fullname,
+                                                'address'      => $contact->street_address,
+                                                'city'         => $contact->city,
+                                                'state'        => $contact->stateprovince,
+                                                'zip_code'     => $contact->postalzip_code,
+                                                'country'      => $contact->country,
+                                                'billingphone' => $contact->phone,
                                             ]
                                         );
                                     }

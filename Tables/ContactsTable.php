@@ -5,6 +5,7 @@ namespace Modules\Contact\Tables;
 use Illuminate\Http\Request;
 use Modules\Contact\Repositories\ContactRepository;
 use Modules\Rarv\Table\Table;
+use Modules\Rarv\Button\Button;
 
 class ContactsTable extends Table
 {
@@ -22,6 +23,19 @@ class ContactsTable extends Table
 
         $this->columns = config('asgard.contact.config.table_columns');
     }
+
+    public function prepareLinks()
+    {
+
+        parent::prepareLinks();
+
+        $url        = route('admin.contact.contacts.show', '##id##');
+        $addViewBtn = new Button('View', $url);
+
+        $addViewBtn->weight   = 2;
+        $this->addLink($addViewBtn);
+    }
+
 
     public function getBuilder()
     {

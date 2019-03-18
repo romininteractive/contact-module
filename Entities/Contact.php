@@ -13,6 +13,8 @@ use Modules\Estimate\Entities\Estimate;
 use Modules\Newnotification\Entities\Newnotification;
 use Modules\Purchases\Entities\Purchases;
 use Modules\Reminder\Entities\Reminder;
+use Modules\Accounting\Entities\Invoices;
+use Modules\Accounting\Entities\Bills;
 
 class Contact extends Model implements ContactInterface
 {
@@ -22,6 +24,8 @@ class Contact extends Model implements ContactInterface
     public $translatedAttributes = [];
     protected $fillable          = ['salutation', 'first_name', 'last_name', 'company_name', 'email', 'phone', 'designation', 'gstin', 'department', 'type', 'user_type'];
     protected $dates = ['deleted_at'];
+
+    protected $appends = ['full_name', 'full_name_phone'];
 
     public function vehicles()
     {
@@ -113,6 +117,13 @@ class Contact extends Model implements ContactInterface
         }else{            
             return ucfirst($this->first_name) . ' ' . $this->last_name;
         }
+    }    
+
+    public function invoices(){
+        return $this->hasMany(Invoices::class, 'customer_id');
+    }
+    public function bills(){
+        return $this->hasMany(Bills::class, 'vendor_id');
     }    
 }
 
