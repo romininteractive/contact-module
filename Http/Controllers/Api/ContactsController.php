@@ -4,6 +4,7 @@ namespace Modules\Contact\Http\Controllers\Api;
 
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
+use Modules\Contact\Entities\Contact;
 use Modules\Contact\Repositories\ContactRepository;
 
 /**
@@ -22,13 +23,13 @@ class ContactsController extends Controller
 	{
 		$contacts = $this->contactsRepo->allWithBuilder();
 
-		$contacts = $contacts->get();
-		$contact_val = [];
-		foreach ($contacts as $key => $contact) {
-			$contact_val[$key]['value'] = $contact['full_name_phone'];
-			$contact_val[$key]['link'] = $contact['full_name_phone'];			
+		if($request->has('type') && $request->get('type') !=null){
+			$type = $request->get('type');
+			$contacts = $contacts->whereUserType($type);		
 		}
-		return $contact_val;
+
+		$contacts = $contacts->get();
+		return $contacts;
 	}
 
 	public function show(Request $request, $id)
@@ -39,9 +40,8 @@ class ContactsController extends Controller
     public function store(request $request)
     {
     	$input = $request->all();
+
     	$input['salutation'] = 'mr';
-    	$input['user_type'] = 'customer';    	
-    	// $input['last_name'] = $input['name'];
         $contact = $this->contactsRepo->create($input);
 
         return response()->json([
