@@ -4,7 +4,7 @@ namespace Modules\Contact\Widgets;
 
 use Modules\Contact\Repositories\ContactRepository;
 use Modules\Dashboard\Foundation\Widgets\BaseWidget;
-
+use Modules\Contact\Entities\Contact;
 /**
  * @author Daksh Mehta <dm@rimail.in>
  */
@@ -33,7 +33,7 @@ class ContactsCountWidget extends BaseWidget
 
     public function data()
     {
-        return ['count' => $this->contacts->count()];
+        return ['count' => Contact::count()];
     }
 
     public function view()
