@@ -12,36 +12,36 @@ use Modules\Contact\Repositories\ContactRepository;
  */
 class ContactsController extends Controller
 {
-	private $contactsRepo;
+    private $contactsRepo;
 
-	public function __construct(ContactRepository $contactsRepo)
-	{
-		$this->contactsRepo = $contactsRepo;
-	}
+    public function __construct(ContactRepository $contactsRepo)
+    {
+        $this->contactsRepo = $contactsRepo;
+    }
 
-	public function index(Request $request)
-	{
-		$contacts = $this->contactsRepo->allWithBuilder();
+    public function index(Request $request)
+    {
+        $contacts = $this->contactsRepo->allWithBuilder();
 
-		if($request->has('type') && $request->get('type') !=null){
-			$type = $request->get('type');
-			$contacts = $contacts->whereUserType($type);		
-		}
+        if ($request->has('type') && $request->get('type') !=null) {
+            $type = $request->get('type');
+            $contacts = $contacts->whereUserType($type);
+        }
 
-		$contacts = $contacts->get();
-		return $contacts;
-	}
+        $contacts = $contacts->get();
+        return $contacts;
+    }
 
-	public function show(Request $request, $id)
-	{
-		return $this->contactsRepo->find($id);
-	}
+    public function show(Request $request, $id)
+    {
+        return $this->contactsRepo->find($id);
+    }
 
     public function store(request $request)
     {
-    	$input = $request->all();
+        $input = $request->all();
 
-    	$input['salutation'] = 'mr';
+        $input['salutation'] = 'mr';
         $contact = $this->contactsRepo->create($input);
 
         return response()->json([
@@ -50,5 +50,5 @@ class ContactsController extends Controller
             'data' => $contact,
             'fullnamephone' => $contact->full_name_phone,
         ]);
-    }	
+    }
 }

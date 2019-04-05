@@ -1,8 +1,8 @@
 <?php
 
 $router->group(['prefix' => '/contact'],
-function($router){
-	$router->resource('contacts', 'ContactsController')->only(['index', 'show','store']);
+function ($router) {
+    $router->resource('contacts', 'ContactsController')->only(['index', 'show','store']);
 });
 
 Route::post('contact', [

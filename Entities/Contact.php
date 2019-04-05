@@ -109,49 +109,53 @@ class Contact extends Model implements ContactInterface
                 return 'info';
                 break;
         }
-    }    
+    }
     public function getFullNamePhoneAttribute($value)
     {
-        if($this->phone !=null){
+        if ($this->phone !=null) {
             return ucfirst($this->first_name) . ' ' . $this->last_name .' - ' . $this->phone;
-        }else{            
+        } else {
             return ucfirst($this->first_name) . ' ' . $this->last_name;
         }
-    }    
+    }
 
-    public function invoices(){
+    public function invoices()
+    {
         return $this->hasMany(Invoices::class, 'customer_id');
     }
-    public function bills(){
+    public function bills()
+    {
         return $this->hasMany(Bills::class, 'vendor_id');
-    }   
+    }
 
     public function getGstStateCodeAttribute()
     {
         $state_name = null;
-        $state_code = substr($this->gstin, 0,2);
+        $state_code = substr($this->gstin, 0, 2);
         $states = config('asgard.contact.gst_states');
         $gst_states = $states['gst_state_code'];
-        if(array_key_exists($state_code, $gst_states)){
+        if (array_key_exists($state_code, $gst_states)) {
             $state_name = $gst_states[$state_code];
-        }        
-        return $state_name; 
+        }
+        return $state_name;
     }
 
-    public function gstState($gstno){
+    public function gstState($gstno)
+    {
         $state_name = null;
-        $state_code = substr($gstno, 0,2);
+        $state_code = substr($gstno, 0, 2);
         $states = config('asgard.contact.gst_states');
         $gst_states = $states['gst_state_code'];
-        if(array_key_exists($state_code, $gst_states)){
+        if (array_key_exists($state_code, $gst_states)) {
             $state_name = $gst_states[$state_code];
-        }        
-        return $state_name;         
+        }
+        return $state_name;
     }
 
-    public function getGstStateCode(){        
-        $state_code = substr($this->gstin, 0,2);        
+    public function getGstStateCode()
+    {
+        $state_code = substr($this->gstin, 0, 2);
         return $state_code;
-    }     
+    }
 }
 

@@ -69,7 +69,7 @@ $router->group(
                 'as'         => 'admin.contact.contacts.show',
                 'uses'       => 'ContactController@show'
             ]
-        );        
+        );
         $router->bind(
             'contactaddress',
             function ($id) {

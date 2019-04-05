@@ -14,7 +14,8 @@ class ContactAddress extends Model
     public $translatedAttributes = [];
     protected $fillable = ['contactId','name','address','city','state','zip_code','country','fax','billingphone'];
 
-    public function contact(){
-    	return $this->belongsTo(Contact::class);
+    public function contact()
+    {
+        return $this->belongsTo(Contact::class);
     }
 }

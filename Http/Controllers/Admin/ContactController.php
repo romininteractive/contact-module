@@ -225,7 +225,6 @@ class ContactController extends AdminBaseController
                 ->join('product__products', 'accounting__invoiceitems.item_id', 'product__products.id')
                 ->select('accounting__invoiceitems.*')
                 ->get();
-
         }
 
         if ($contact->user_type == 'vendor') {
@@ -309,15 +308,13 @@ class ContactController extends AdminBaseController
                                         );
                                     }
                                 } catch (\Exception $e) {
-                                    dd($e);
-                                    error_log($e);
+                                    \Log::error($e);
                                 }
                             }
                             // }
                         }
                     } catch (\Exception $e) {
-                        dd($e);
-                        error_log($e);
+                        \Log::error($e);
                     }
                     return redirect()->route('admin.contact.contact.index')
                         ->withSuccess('Contact import successfully');
@@ -325,7 +322,6 @@ class ContactController extends AdminBaseController
                 }
             }
         } catch (\Exception $e) {
-            error_log($e);
             return 'FAIL';
         }
     }
