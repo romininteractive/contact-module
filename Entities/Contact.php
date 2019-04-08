@@ -32,6 +32,17 @@ class Contact extends Model implements ContactInterface
         return $this->hasMany(Vehicle::class);
     }
 
+    public function billingAddress()
+    {
+        // @todo Implement caching
+        return $this->addresses()->where('type', 'billing')->first();
+    }
+
+    public function addresses()
+    {
+        return $this->hasMany(ContactAddress::class, 'contactId');
+    }
+
     public function purchase()
     {
         return $this->hasMany(Purchases::class);

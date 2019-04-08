@@ -18,4 +18,9 @@ class ContactAddress extends Model
     {
         return $this->belongsTo(Contact::class);
     }
+
+    public function getName()
+    {
+        return $this->name;
+    }
 }
