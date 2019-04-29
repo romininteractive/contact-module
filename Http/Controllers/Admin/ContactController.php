@@ -75,7 +75,7 @@ class ContactController extends AdminBaseController
             'billingphone' => 'nullable|min:10',
         ];
 
-        if (setting('contact::shipping_details')) {
+        if (setting('contact::shipping_details') == 1) {
             $rules = array_merge(
                 $rules,
                 [
@@ -103,7 +103,7 @@ class ContactController extends AdminBaseController
         $contactaddresss->billingphone = $request->billingphone;
         $contactaddresss->save();
 
-        if (setting('contact::shipping_details')) {
+        if (setting('contact::shipping_details') == 1) {
             $shipping_details               = new ContactAddress();
             $shipping_details->contactId    = $contact->id;
             $shipping_details->type         = 'shipping';
@@ -157,7 +157,7 @@ class ContactController extends AdminBaseController
             'billingphone' => 'nullable|min:10',
         ];
 
-        if (setting('contact::shipping_details')) {
+        if (setting('contact::shipping_details') == 1) {
             $rules = array_merge(
                 $rules,
                 [
@@ -184,7 +184,7 @@ class ContactController extends AdminBaseController
         $billingConatctAddress->billingphone = $request->billingphone;
         $billingConatctAddress->save();
 
-        if (setting('contact::shipping_details')) {
+        if (setting('contact::shipping_details') == 1) {
             $shippingConatctAddress               = ContactAddress::where('contactId', $contact->id)->where('type', 'shipping')->first();
             $shippingConatctAddress->name         = $request->sname;
             $shippingConatctAddress->address      = $request->saddress;

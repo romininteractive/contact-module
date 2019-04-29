@@ -151,8 +151,12 @@ class Contact extends Model implements ContactInterface
         return $state_name;
     }
 
-    public function gstState($gstno)
+    public function gstState($gstno = null)
     {
+        if ($gstno == null) {
+            $gstno = $this->gstin;
+        }
+
         $state_name = null;
         $state_code = substr($gstno, 0, 2);
         $states = config('asgard.contact.gst_states');
@@ -167,6 +171,27 @@ class Contact extends Model implements ContactInterface
     {
         $state_code = substr($this->gstin, 0, 2);
         return $state_code;
+    }
+
+    public function createAddress($type = 'billing')
+    {
+        $address = $this->billingAddress();
+
+        if ($address) {
+            return false;
+        }
+
+        $address = new ContactAddress;
+        $address->contactId = $this->id;
+        $address->type = $type;
+
+        $address->name = $this->getName();
+        // address, city, zip_code, state, country, fax, billingphone
+        $address->billingphone = $this->mobileNo();
+
+        $address->save();
+
+        return $address;
     }
 }
 

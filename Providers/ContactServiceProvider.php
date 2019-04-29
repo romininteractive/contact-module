@@ -3,10 +3,11 @@
 namespace Modules\Contact\Providers;
 
 use Illuminate\Support\ServiceProvider;
-use Modules\Core\Traits\CanPublishConfiguration;
+use Modules\Contact\Console\FixContactsCommand;
+use Modules\Contact\Events\Handlers\RegisterContactSidebar;
 use Modules\Core\Events\BuildingSidebar;
 use Modules\Core\Events\LoadingBackendTranslations;
-use Modules\Contact\Events\Handlers\RegisterContactSidebar;
+use Modules\Core\Traits\CanPublishConfiguration;
 
 class ContactServiceProvider extends ServiceProvider
 {
@@ -26,6 +27,7 @@ class ContactServiceProvider extends ServiceProvider
     public function register()
     {
         $this->registerBindings();
+        $this->registerCommands();
         $this->app['events']->listen(BuildingSidebar::class, RegisterContactSidebar::class);
 
         $this->app['events']->listen(
@@ -36,6 +38,13 @@ class ContactServiceProvider extends ServiceProvider
                 // append translations
             }
         );
+    }
+
+    public function registerCommands()
+    {
+        $this->commands([
+            FixContactsCommand::class,
+        ]);
     }
 
     public function boot()
