@@ -4,16 +4,14 @@
     "description": "",
     "keywords": [],
     "version": "1.0.0",
-	"active": 1,
+    "active": 1,
     "order": 1,
     "providers": [
         "Modules\\Contact\\Providers\\ContactServiceProvider",
         "Modules\\Contact\\Providers\\RouteServiceProvider"
     ],
-    "aliases": {},
-    "files": [
-        
-    ],
+    "aliases": [],
+    "files": [],
     "widgets": [
         "Modules\\Contact\\Widgets\\ContactsCountWidget"
     ],
