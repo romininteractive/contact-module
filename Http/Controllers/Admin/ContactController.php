@@ -210,7 +210,10 @@ class ContactController extends AdminBaseController
 
     public function show(Contact $contact)
     {
-
+        if (!is_module_enabled('Accounting')) {
+            return redirect()->route('admin.contact.contact.index', ['type' => $contact->user_type])
+            ->withError('Accounting module is disable');
+        }
         $invoices          = null;
         $bills             = null;
         $customer_products = null;
