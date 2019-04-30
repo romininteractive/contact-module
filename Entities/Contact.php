@@ -7,14 +7,15 @@ use Dimsav\Translatable\Translatable;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Notifications\Notifiable;
+use Modules\Accounting\Entities\Bills;
+use Modules\Accounting\Entities\Invoices;
 use Modules\Contact\Entities\ContactAddress;
 use Modules\Contact\Entities\Vehicle;
 use Modules\Estimate\Entities\Estimate;
 use Modules\Newnotification\Entities\Newnotification;
 use Modules\Purchases\Entities\Purchases;
+use Modules\Quotation\Entities\Quote;
 use Modules\Reminder\Entities\Reminder;
-use Modules\Accounting\Entities\Invoices;
-use Modules\Accounting\Entities\Bills;
 
 class Contact extends Model implements ContactInterface
 {
@@ -167,6 +168,11 @@ class Contact extends Model implements ContactInterface
     {
         $state_code = substr($this->gstin, 0, 2);
         return $state_code;
+    }
+
+    public function quotes()
+    {
+        return $this->hasMany(Quote::class, 'customer_id');
     }
 }
 

@@ -14,8 +14,9 @@
 @section('content')
     {!! Form::open(['route' => ['admin.contact.contacts.update', $contact->id], 'method' => 'put']) !!}
     <div class="row">
-        <input type="hidden" name="country_name" id="country_name" value="<?php echo $billingConatctAddress->country; ?>">
-        <input type="hidden" name="state_name" id="state_name" value="<?php echo $billingConatctAddress->state; ?>">        
+
+        <input type="hidden" name="country_name" id="country_name" value="{{($billingConatctAddress)?$billingConatctAddress->country:null}}">
+        <input type="hidden" name="state_name" id="state_name" value="{{($billingConatctAddress)?$billingConatctAddress->state:null}}">        
         <div class="col-md-12">
             <div class="nav-tabs-custom">
                 @include('partials.form-tab-headers')
