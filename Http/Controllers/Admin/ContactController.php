@@ -172,7 +172,12 @@ class ContactController extends AdminBaseController
 
         $contact = $this->contact->update($contact, $request->all());
 
-        $billingConatctAddress = ContactAddress::where('contactId', $contact->id)->where('type', 'billing')->first();
+        $billingConatctAddress = $contact->billingAddress();
+
+        if(! $billingConatctAddress){
+            $billingConatctAddress = new ContactAddress;
+            $billingConatctAddress->type = 'billing';
+        }
 
         $billingConatctAddress->name         = $request->name;
         $billingConatctAddress->address      = $request->address;
