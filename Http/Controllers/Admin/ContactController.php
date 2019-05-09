@@ -174,7 +174,7 @@ class ContactController extends AdminBaseController
 
         $billingConatctAddress = $contact->billingAddress();
 
-        if(! $billingConatctAddress){
+        if (! $billingConatctAddress) {
             $billingConatctAddress = new ContactAddress;
             $billingConatctAddress->type = 'billing';
         }

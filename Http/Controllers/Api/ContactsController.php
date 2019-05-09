@@ -45,12 +45,8 @@ class ContactsController extends Controller
         $input['salutation'] = 'mr';
         $contact = $this->contactsRepo->create($input);
 
-        $contactaddresss               = new ContactAddress();
-        $contactaddresss->contactId    = $contact->id;
-        $contactaddresss->type         = 'billing';
-        $contactaddresss->name         = $contact->full_name;
-        $contactaddresss->save();
-        
+        $contact->createAddress('billing');
+
         return response()->json([
             'errors' => false,
             'message' => trans('contact created'),
