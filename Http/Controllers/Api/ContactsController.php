@@ -5,6 +5,7 @@ namespace Modules\Contact\Http\Controllers\Api;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Modules\Contact\Entities\Contact;
+use Modules\Contact\Entities\ContactAddress;
 use Modules\Contact\Repositories\ContactRepository;
 
 /**
@@ -43,6 +44,8 @@ class ContactsController extends Controller
 
         $input['salutation'] = 'mr';
         $contact = $this->contactsRepo->create($input);
+
+        $contact->createAddress('billing');
 
         return response()->json([
             'errors' => false,
