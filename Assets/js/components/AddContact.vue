@@ -38,6 +38,13 @@
                 </el-row>   
                 <el-row>
                     <el-col :span="12">                
+                        <el-form-item :label="trans('Company Name')" :class="{'el-form-item is-error': form.errors.has('company_name') }">
+                            <el-input v-model="contact.company_name" name="company_name" auto-complete="off" autofocus></el-input>
+                            <div class="el-form-item__error" v-if="form.errors.has('company_name')"
+                                 v-text="form.errors.first('company_name')"></div>
+                        </el-form-item>
+                    </el-col>
+                    <el-col :span="12">                
                         <el-form-item :label="trans('GSTIN')" :class="{'el-form-item is-error': form.errors.has('gstin') }">
                             <el-input v-model="contact.gstin" name="gstin" auto-complete="off" autofocus></el-input>
                             <div class="el-form-item__error" v-if="form.errors.has('gstin')"
@@ -69,6 +76,7 @@
                     phone: '',
                     email: '',
                     gstin: '',
+                    company_name: '',
                 },
                 form: new Form(),
                 loading: false,
@@ -84,6 +92,13 @@
                         { min: 10, message: 'Enter valid mobile number', trigger: 'blur' }                        
                     ]                                        
                 },
+                company_name: [
+                    { 
+                        min: 3, 
+                        message: 'Enter the company name with minimum of 3 character.', 
+                        trigger: 'blur'
+                    }
+                ]
             };
         },
         methods: {
@@ -103,6 +118,7 @@
                         this.contact.phone = '';
                         this.contact.email = '';
                         this.contact.gstin = '';
+                        this.contact.company_name = '';
                         this.$events.emit('ContactWasCreated', response.data);
                     })
                     .catch((error) => {
