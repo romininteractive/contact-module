@@ -259,11 +259,11 @@ class ContactController extends AdminBaseController
     public function destroy(Contact $contact)
     {
 
-        try {            
-        $this->contact->destroy($contact);
+        try {
+            $this->contact->destroy($contact);
         } catch (\Exception $e) {
             return redirect()->route('admin.contact.contact.index')
-            ->withError('Not allowed to delete! Customer has invoice or bill');            
+            ->withError('Not allowed to delete! Customer has invoice or bill');
         }
 
         return redirect()->route('admin.contact.contact.index')
