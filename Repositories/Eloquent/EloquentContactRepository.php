@@ -19,4 +19,12 @@ class EloquentContactRepository extends EloquentBaseRepository implements Contac
     {
         return $this->model->where($attributes);
     }
+
+    public function destroy($model)
+    {
+        if (count($model->invoices) > 0 || count($model->bills)) {
+            throw new \Exception("Not allowed to delete! Customer contain invoices or bills ", 1);
+        }
+        return $model->delete();
+    }
 }

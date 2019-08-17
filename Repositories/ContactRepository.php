@@ -9,4 +9,6 @@ interface ContactRepository extends BaseRepository
     public function count();
 
     public function where(array $attributes);
+
+    public function destroy($model);
 }
