@@ -8,7 +8,7 @@ interface ContactRepository extends BaseRepository
 {
     public function count();
 
-    public function where(array $attributes);
+    public function contact_where(array $attributes);
 
     public function destroy($model);
 }

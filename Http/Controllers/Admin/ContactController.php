@@ -258,7 +258,6 @@ class ContactController extends AdminBaseController
      */
     public function destroy(Contact $contact)
     {
-
         try {
             $this->contact->destroy($contact);
         } catch (\Exception $e) {
