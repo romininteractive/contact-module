@@ -35,6 +35,7 @@
             </div>
         </fieldset>
     </div>
+    @action('contact.top_field', null)
     <div class="row" style="margin-top: 10px;">
         <div class="col-sm-{{ (setting('product::shipping_details') ? 6 : 12) }}">
             <fieldset>
