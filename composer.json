@@ -8,8 +8,7 @@
         "composer/installers": "~1.0",
         "idavoll/core-module": "~3.0|4.0.x-dev",
         "romininteractive/rarv": "dev-master",
-        "maatwebsite/excel": "~2",
-        "tormjens/eventy": "dev-master"
+        "maatwebsite/excel": "~2"
     },
     "require-dev": {
         "phpunit/phpunit": "~6.0",
