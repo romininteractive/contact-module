@@ -51,7 +51,16 @@
                                  v-text="form.errors.first('gstin')"></div>
                         </el-form-item>
                     </el-col>
-                </el-row>                   
+                </el-row>
+                <el-row>                
+                    <el-col :span="12">                                    
+                        <el-form-item :label="trans('CITY')" :class="{'el-form-item is-error': form.errors.has('city') }">
+                            <el-input v-model="contact.city" name="city" auto-complete="off" autofocus></el-input>
+                            <div class="el-form-item__error" v-if="form.errors.has('city')"
+                                 v-text="form.errors.first('city')"></div>
+                        </el-form-item>                                                           
+                    </el-col> 
+                </el-row>                           
             </el-form>
             <span slot="footer" class="dialog-footer">
                 <el-button @click="closeDialog">{{ trans('core.button.cancel') }}</el-button>
@@ -77,6 +86,7 @@
                     email: '',
                     gstin: '',
                     company_name: '',
+                    city:'',
                 },
                 form: new Form(),
                 loading: false,
@@ -119,6 +129,7 @@
                         this.contact.email = '';
                         this.contact.gstin = '';
                         this.contact.company_name = '';
+                        this.contact.city = '';
                         this.$events.emit('ContactWasCreated', response.data);
                     })
                     .catch((error) => {

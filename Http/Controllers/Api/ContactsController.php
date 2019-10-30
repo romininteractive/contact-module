@@ -40,13 +40,20 @@ class ContactsController extends Controller
 
     public function store(request $request)
     {
-        $input = $request->all();
+        $city = ($request->has('city'))?$request->get('city'):'';
+        $input =$request->except(['city']);
+
+        // $input = $request->all();
 
         $input['salutation'] = 'mr';
+
         $contact = $this->contactsRepo->create($input);
 
         $contact->createAddress('billing');
+        $address = $contact->billingAddress();
 
+        $address->city = $city;
+        $address->save();
         return response()->json([
             'errors' => false,
             'message' => trans('contact created'),

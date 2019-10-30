@@ -28,6 +28,13 @@ class Contact extends Model implements ContactInterface
 
     protected $appends = ['full_name', 'full_name_phone'];
 
+    public function __construct(array $attributes = [])
+    {
+        $this->fillable = array_merge($this->fillable, config('asgard.contact.config.contact.fillable'));
+
+        parent::__construct($attributes);
+    }
+    
     public function vehicles()
     {
         return $this->hasMany(Vehicle::class);
