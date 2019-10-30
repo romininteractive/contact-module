@@ -14,7 +14,6 @@ use Modules\Contact\Http\Requests\UpdateContactRequest;
 use Modules\Contact\Repositories\ContactRepository;
 use Modules\Contact\Tables\ContactsTable;
 use Modules\Core\Http\Controllers\Admin\AdminBaseController;
-use Modules\Product\Repositories\ProductRepository;
 use Modules\Rarv\Table\TableBuilder;
 use Nwidart\Modules\config;
 
@@ -27,12 +26,11 @@ class ContactController extends AdminBaseController
      */
     private $contact;
 
-    public function __construct(ContactRepository $contact, ProductRepository $product)
+    public function __construct(ContactRepository $contact)
     {
         parent::__construct();
 
         $this->contact = $contact;
-        $this->product = $product;
     }
 
     /**
@@ -174,8 +172,8 @@ class ContactController extends AdminBaseController
 
         $billingConatctAddress = $contact->billingAddress();
 
-        if (! $billingConatctAddress) {
-            $billingConatctAddress = new ContactAddress;
+        if (!$billingConatctAddress) {
+            $billingConatctAddress       = new ContactAddress;
             $billingConatctAddress->type = 'billing';
         }
 
@@ -212,7 +210,7 @@ class ContactController extends AdminBaseController
     {
         if (!is_module_enabled('Accounting')) {
             return redirect()->route('admin.contact.contact.index', ['type' => $contact->user_type])
-            ->withError('Accounting module is disable');
+                ->withError('Accounting module is disable');
         }
         $invoices          = null;
         $bills             = null;
