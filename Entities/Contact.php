@@ -30,7 +30,7 @@ class Contact extends Model implements ContactInterface
 
     public function __construct(array $attributes = [])
     {
-        $this->fillable = array_merge($this->fillable, config('asgard.contact.config.contact.fillable'));
+        $this->fillable = array_merge($this->fillable, config('asgard.contact.config.fillable'));
 
         parent::__construct($attributes);
     }
