@@ -44,7 +44,7 @@ class ContactsTable extends Table
     {
         $builder = parent::getBuilder();
         if (request()->has('type')) {
-            $builder = $this->getRepository()->contact_where(['user_type' => request()->get('type')]);
+            $builder = $this->getRepository()->contactWhere(['user_type' => request()->get('type')]);
         }
         // if (request()->has('full_name')) {
         //     $builder = $this->getRepository()->where(['first_name', 'LIKE', '%'.request()->get('full_name').'%']);

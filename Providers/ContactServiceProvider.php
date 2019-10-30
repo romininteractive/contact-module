@@ -49,6 +49,15 @@ class ContactServiceProvider extends ServiceProvider
 
     public function boot()
     {
+        $this->publishes([
+            __DIR__ . '/../Resources/views' => base_path('resources/views/asgard/contact'),
+        ], 'views');
+
+        $this->app['view']->prependNamespace(
+            'contact',
+            base_path('resources/views/asgard/contact')
+        );
+
         include_once __DIR__.'/../includes/functions.php';
 
         $this->publishConfig('contact', 'config');
