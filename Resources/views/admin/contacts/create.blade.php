@@ -105,8 +105,8 @@
             $("#first_name").change(function(){
                 var firstName = $(this).val();
 
-                $("#name").val(firstName);
-                $("#sname").val(firstName);
+                $("#name").val(firstName + ' ' + $("#last_name").val());
+                $("#sname").val(firstName + ' ' + $("#last_name").val());
             });
             $("#last_name").change(function(){
                 var lastName = $(this).val();
