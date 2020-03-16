@@ -66,8 +66,8 @@ $router->group(
         $router->get(
             'contacts/{contact}/show',
             [
-                'as'         => 'admin.contact.contacts.show',
-                'uses'       => 'ContactController@show'
+                'as'   => 'admin.contact.contacts.show',
+                'uses' => 'ContactController@show',
             ]
         );
         $router->bind(
@@ -124,7 +124,13 @@ $router->group(
                 'middleware' => 'can:contact.contactaddresses.destroy',
             ]
         );
-
+        // Route::get('samplefile', function(){
+        //     return \Excel::create('modules/contact/sample-contact.ods')->download('csv');
+        // });
+        Route::get('samplefile', [
+            'as' => 'admin.contact.contact.samplefile',
+            'uses' => 'ContactController@sampleFile'
+        ]);
         Route::get(
             'import',
             [

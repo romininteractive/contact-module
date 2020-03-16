@@ -267,6 +267,11 @@ class ContactController extends AdminBaseController
             ->withSuccess(trans('core::core.messages.resource deleted', ['name' => trans('contact::contacts.title.contacts')]));
     }
 
+    public function sampleFile()
+    {
+        return \Excel::create('modules/contact/sample-contact.ods')->download('csv');
+    }
+
     public function importContact()
     {
         return view('contact::admin.contacts.import');
@@ -289,14 +294,14 @@ class ContactController extends AdminBaseController
                                 $contact_type = 'vendor';
                             }
 
-                            if ($type != null && $contact->first != null && $contact->last != null) {
+                            if ($type != null && $contact->first_name != null && $contact->last_name != null) {
                                 try {
                                     $newcontact = Contact::firstOrCreate(
                                         [
                                             'salutation'   => 'ms',
-                                            'first_name'   => $contact->first,
-                                            'last_name'    => $contact->last,
-                                            'company_name' => $contact->name,
+                                            'first_name'   => $contact->first_name,
+                                            'last_name'    => $contact->last_name,
+                                            'company_name' => $contact->company_name,
                                             'email'        => $contact->email,
                                             'phone'        => ($contact->phone) ? $contact->phone : null,
                                             'user_type'    => $contact_type,
@@ -314,7 +319,7 @@ class ContactController extends AdminBaseController
                                                 'state'        => $contact->stateprovince,
                                                 'zip_code'     => $contact->postalzip_code,
                                                 'country'      => $contact->country,
-                                                'billingphone' => $contact->phone,
+                                                'billingphone' => $contact->billing_phone,
                                             ]
                                         );
                                     }
