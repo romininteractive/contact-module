@@ -42,7 +42,7 @@ class RegisterContactSidebar implements \Maatwebsite\Sidebar\SidebarExtender
                 $group->item(
                     trans('contact::contacts.title.contacts'),
                     function (Item $item) {
-                        $item->icon('fa fa-copy');
+                        $item->icon('glyphicon glyphicon-user');
                         $item->weight(10);
                         $item->authorize(
                             /* append */
@@ -50,7 +50,7 @@ class RegisterContactSidebar implements \Maatwebsite\Sidebar\SidebarExtender
                         $item->item(
                             trans('contact::contacts.title.vendors'),
                             function (Item $item) {
-                                $item->icon('fa fa-copy');
+                                $item->icon('fa fa-user-md');
                                 $item->weight(0);
                                 $item->append('admin.contact.contacts.create');
                                 $item->route('admin.contact.contact.index', ['type' => 'vendor']);
@@ -63,7 +63,7 @@ class RegisterContactSidebar implements \Maatwebsite\Sidebar\SidebarExtender
                         $item->item(
                             trans('contact::contacts.title.customers'),
                             function (Item $item) {
-                                $item->icon('fa fa-copy');
+                                $item->icon('fa fa-user');
                                 $item->weight(0);
                                 $item->append('admin.contact.contacts.create');
                                 $item->route('admin.contact.contact.index', ['type' => 'customer']);
@@ -75,7 +75,7 @@ class RegisterContactSidebar implements \Maatwebsite\Sidebar\SidebarExtender
                         $item->item(
                             trans('contact::contacts.title.import'),
                             function (Item $item) {
-                                $item->icon('fa fa-copy');
+                                $item->icon('fa fa-user-plus');
                                 $item->weight(0);
                                 $item->append('admin.contact.contacts.create');
                                 $item->route('admin.contact.import');

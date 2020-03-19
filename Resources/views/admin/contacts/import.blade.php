@@ -36,6 +36,10 @@
                         <button type="submit" class="btn btn-primary btn-flat">
                             {{ trans('contact::contacts.button.import') }}
                         </button>
+                        &nbsp;&nbsp;&nbsp;
+                        <a class="btn btn-info btn-flat" href="{{ route('admin.contact.contact.samplefile')}}">
+                            Download Sample File 
+                        </a>                        
                         <a class="btn btn-danger pull-right btn-flat" href="{{ route('admin.contact.contact.index')}}">
                             <i class="fa fa-times"></i> {{ trans('core::core.button.cancel') }}
                         </a>
