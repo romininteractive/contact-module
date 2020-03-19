@@ -61,11 +61,17 @@ class Contact extends Model implements ContactInterface
         return ucfirst($this->first_name) . ' ' . ucfirst($this->last_name);
     }
 
+    /**
+     * @todo Make this work only when Reminder module is installed.
+     */
     public function reminders()
     {
         return $this->hasMany(Reminder::class);
     }
 
+    /**
+     * @todo Unused relationship found.
+     */
     public function newnotification()
     {
         return $this->hasMany(Newnotification::class);
@@ -132,7 +138,9 @@ class Contact extends Model implements ContactInterface
     public function getFullNamePhoneAttribute($value)
     {
         if ($this->phone !=null) {
-            return ucfirst($this->first_name) . ' ' . $this->last_name .' - ' . $this->phone;
+            $company = (($this->company_name != '') ? ' ('.$this->company_name.') ' : '');
+
+            return ucfirst($this->first_name) . ' ' . $this->last_name . $company . ' - ' . $this->phone;
         } else {
             return ucfirst($this->first_name) . ' ' . $this->last_name;
         }
