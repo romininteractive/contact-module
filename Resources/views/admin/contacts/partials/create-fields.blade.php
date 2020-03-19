@@ -79,4 +79,51 @@
         </div>
         @endif
     </div>
+
+    <div class="row" style="margin-top: 10px;">
+        <div class="col-md-6">
+            <fieldset>
+                <legend>
+                    Contact Details:
+                </legend>
+            </fieldset>
+            <div class="row">
+                <div class="col-md-6">
+                    {!! Form::normalInput('landline1', 'Landline #1', $errors, '', ['tabindex'=> '31']) !!}
+                </div>
+                <div class="col-md-6">
+                    {!! Form::normalInput('landline2', 'Landline #2', $errors, '', ['tabindex'=> '32']) !!}
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-6">
+                    {!! Form::normalInput('mobile1', 'Mobile #1', $errors, '', ['tabindex'=> '33']) !!}
+                </div>
+                <div class="col-md-6">
+                    {!! Form::normalInput('mobile2', 'Mobile #2', $errors, '', ['tabindex'=> '34']) !!}
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row" style="margin-top: 10px;">
+        <div class="col-md-6">
+            <fieldset>
+                <legend>
+                    Remarks:
+                </legend>
+
+                {!! Form::normalTextarea('remarks', 'Remarks', $errors, '', ['tabindex' => 35]) !!}
+            </fieldset>
+        </div>
+        <div class="col-md-6">
+            <fieldset>
+                <legend>
+                    Bank Account Details:
+                </legend>
+
+                {!! Form::normalTextarea('bank_details', 'Bank Details', $errors, '', ['tabindex' => 36]) !!}
+            </fieldset>
+        </div>
+    </div>
 </div>

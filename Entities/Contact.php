@@ -23,7 +23,11 @@ class Contact extends Model implements ContactInterface
 
     protected $table             = 'contact__contacts';
     public $translatedAttributes = [];
-    protected $fillable          = ['salutation', 'first_name', 'last_name', 'company_name', 'email', 'phone', 'designation', 'gstin', 'department', 'type', 'user_type'];
+    protected $fillable          = [
+        'salutation', 'first_name', 'last_name', 'company_name', 'email', 'phone', 'designation', 'gstin', 'department', 'type', 'user_type',
+        'landline1', 'landline2', 'mobile1', 'mobile2', 'remarks', 'bank_details'
+    ];
+
     protected $dates = ['deleted_at'];
 
     protected $appends = ['full_name', 'full_name_phone'];
@@ -34,7 +38,12 @@ class Contact extends Model implements ContactInterface
 
         parent::__construct($attributes);
     }
-    
+
+    /**
+     * @deprecated This relationship should not be here.
+     *
+     * @todo Refactor this
+     */
     public function vehicles()
     {
         return $this->hasMany(Vehicle::class);
@@ -51,6 +60,10 @@ class Contact extends Model implements ContactInterface
         return $this->hasMany(ContactAddress::class, 'contactId');
     }
 
+    /**
+     * @deprecated This relationship should not be here.
+     * @todo Refactor this
+     */
     public function purchase()
     {
         return $this->hasMany(Purchases::class);
@@ -102,6 +115,11 @@ class Contact extends Model implements ContactInterface
         return null;
     }
 
+    /**
+     * @deprecated Relationship should not be loaded globally.
+     *
+     * @todo Refactor this.
+     */
     public function estimate()
     {
         return $this->hasMany(Estimate::class);
@@ -129,7 +147,7 @@ class Contact extends Model implements ContactInterface
             case 'vendor':
                 return 'warning';
                 break;
-            
+
             default:
                 return 'info';
                 break;
@@ -137,8 +155,8 @@ class Contact extends Model implements ContactInterface
     }
     public function getFullNamePhoneAttribute($value)
     {
-        if ($this->phone !=null) {
-            $company = (($this->company_name != '') ? ' ('.$this->company_name.') ' : '');
+        if ($this->phone != null) {
+            $company = (($this->company_name != '') ? ' (' . $this->company_name . ') ' : '');
 
             return ucfirst($this->first_name) . ' ' . $this->last_name . $company . ' - ' . $this->phone;
         } else {
@@ -146,10 +164,20 @@ class Contact extends Model implements ContactInterface
         }
     }
 
+    /**
+     * @todo Refactor this for Accounting Module
+     *
+     * @return void
+     */
     public function invoices()
     {
         return $this->hasMany(Invoices::class, 'customer_id');
     }
+
+    /**
+     * @todo Refactor this for Accounting Module
+     *
+     */
     public function bills()
     {
         return $this->hasMany(Bills::class, 'vendor_id');
@@ -210,9 +238,11 @@ class Contact extends Model implements ContactInterface
         return $address;
     }
 
+    /**
+     * @todo Refactor this for XSOverland
+     */
     public function quotes()
     {
         return $this->hasMany(Quote::class, 'customer_id');
     }
 }
-
