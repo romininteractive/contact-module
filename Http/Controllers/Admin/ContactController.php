@@ -3,19 +3,20 @@
 namespace Modules\Contact\Http\Controllers\Admin;
 
 use DB;
-use Excel;
-use Illuminate\Foundation\Validation\ValidatesRequests;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+use Maatwebsite\Excel\Facades\Excel;
+use Modules\Rarv\Table\TableBuilder;
 use Modules\Contact\Entities\Contact;
+use Modules\Contact\Tables\ContactsTable;
+use Modules\Contact\Imports\ContactImport;
 use Modules\Contact\Entities\ContactAddress;
+use Modules\Contact\Repositories\ContactRepository;
+use Illuminate\Foundation\Validation\ValidatesRequests;
 use Modules\Contact\Http\Requests\CreateContactRequest;
 use Modules\Contact\Http\Requests\UpdateContactRequest;
-use Modules\Contact\Repositories\ContactRepository;
-use Modules\Contact\Tables\ContactsTable;
+
 use Modules\Core\Http\Controllers\Admin\AdminBaseController;
-use Modules\Rarv\Table\TableBuilder;
-use Nwidart\Modules\config;
 
 class ContactController extends AdminBaseController
 {
@@ -260,85 +261,23 @@ class ContactController extends AdminBaseController
             $this->contact->destroy($contact);
         } catch (\Exception $e) {
             return redirect()->route('admin.contact.contact.index')
-            ->withError('Not allowed to delete! Customer has invoice or bill');
+                ->withError('Not allowed to delete! Customer has invoice or bill');
         }
 
         return redirect()->route('admin.contact.contact.index')
             ->withSuccess(trans('core::core.messages.resource deleted', ['name' => trans('contact::contacts.title.contacts')]));
     }
 
-    public function sampleFile()
-    {
-        return \Excel::create('modules/contact/sample-contact.ods')->download('csv');
-    }
-
     public function importContact()
     {
         return view('contact::admin.contacts.import');
     }
-    public function postImportContact(request $request)
+    public function postImportContact(Request $request)
     {
-        try {
-            if ($request->hasFile('contact')) {
-                $path = $request->file('contact')->getRealPath();
-                $data = \Excel::load($path)->get();
+        $file = $request->file('contact');
 
-                if ($data->count()) {
-                    try {
-                        foreach ($data as $key => $contact) {
-                            $type         = $contact->type;
-                            $contact_type = 'customer';
-                            if ($type != null && $type == 'CUSTOMER') {
-                                $contact_type = 'customer';
-                            } elseif ($type != null && $type == 'VENDOR') {
-                                $contact_type = 'vendor';
-                            }
+        Excel::import(new ContactImport, $file);
 
-                            if ($type != null && $contact->first_name != null && $contact->last_name != null) {
-                                try {
-                                    $newcontact = Contact::firstOrCreate(
-                                        [
-                                            'salutation'   => 'ms',
-                                            'first_name'   => $contact->first_name,
-                                            'last_name'    => $contact->last_name,
-                                            'company_name' => $contact->company_name,
-                                            'email'        => $contact->email,
-                                            'phone'        => ($contact->phone) ? $contact->phone : null,
-                                            'user_type'    => $contact_type,
-                                        ]
-                                    );
-                                    $address_types = ['billing', 'shipping'];
-                                    foreach ($address_types as $key => $value) {
-                                        $address_details = ContactAddress::firstOrCreate(
-                                            [
-                                                'contactId'    => $newcontact->id,
-                                                'type'         => $value,
-                                                'name'         => $newcontact->fullname,
-                                                'address'      => $contact->street_address,
-                                                'city'         => $contact->city,
-                                                'state'        => $contact->stateprovince,
-                                                'zip_code'     => $contact->postalzip_code,
-                                                'country'      => $contact->country,
-                                                'billingphone' => $contact->billing_phone,
-                                            ]
-                                        );
-                                    }
-                                } catch (\Exception $e) {
-                                    \Log::error($e);
-                                }
-                            }
-                            // }
-                        }
-                    } catch (\Exception $e) {
-                        \Log::error($e);
-                    }
-                    return redirect()->route('admin.contact.contact.index')
-                        ->withSuccess('Contact import successfully');
-                    // }
-                }
-            }
-        } catch (\Exception $e) {
-            return 'FAIL';
-        }
+        return redirect()->route('admin.contact.contacts.index')->withSuccess('Contacts has been imported successfully.');
     }
 }
