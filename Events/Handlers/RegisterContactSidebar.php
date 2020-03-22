@@ -53,7 +53,7 @@ class RegisterContactSidebar implements \Maatwebsite\Sidebar\SidebarExtender
                                 $item->icon('fa fa-user-md');
                                 $item->weight(0);
                                 $item->append('admin.contact.contacts.create');
-                                $item->route('admin.contact.contact.index', ['type' => 'vendor']);
+                                $item->route('admin.contact.contacts.index', ['type' => 'vendor']);
                                 $item->authorize(
                                     $this->auth->hasAccess('contact.contacts.index')
                                 );
@@ -66,19 +66,7 @@ class RegisterContactSidebar implements \Maatwebsite\Sidebar\SidebarExtender
                                 $item->icon('fa fa-user');
                                 $item->weight(0);
                                 $item->append('admin.contact.contacts.create');
-                                $item->route('admin.contact.contact.index', ['type' => 'customer']);
-                                $item->authorize(
-                                    $this->auth->hasAccess('contact.contacts.index')
-                                );
-                            }
-                        );
-                        $item->item(
-                            trans('contact::contacts.title.import'),
-                            function (Item $item) {
-                                $item->icon('fa fa-user-plus');
-                                $item->weight(0);
-                                $item->append('admin.contact.contacts.create');
-                                $item->route('admin.contact.import');
+                                $item->route('admin.contact.contacts.index', ['type' => 'customer']);
                                 $item->authorize(
                                     $this->auth->hasAccess('contact.contacts.index')
                                 );

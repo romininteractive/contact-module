@@ -18,7 +18,7 @@ $router->group(
         $router->get(
             'contacts',
             [
-                'as'         => 'admin.contact.contact.index',
+                'as'         => 'admin.contact.contacts.index',
                 'uses'       => 'ContactController@index',
                 'middleware' => 'can:contact.contacts.index',
             ]

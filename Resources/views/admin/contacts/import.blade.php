@@ -7,7 +7,7 @@
     <ol class="breadcrumb">
         <li><a href="{{ route('dashboard.index') }}"><i class="fa fa-dashboard"></i> {{ trans('core::core.breadcrumb.home') }}</a></li>
         <li>
-            <a href="{{ route('admin.contact.contact.index') }}">
+            <a href="{{ route('admin.contact.contacts.index') }}">
                 {{ trans('contact::contacts.title.contacts') }}
             </a>
         </li>
@@ -37,10 +37,7 @@
                             {{ trans('contact::contacts.button.import') }}
                         </button>
                         &nbsp;&nbsp;&nbsp;
-                        <a class="btn btn-info btn-flat" href="{{ route('admin.contact.contact.samplefile')}}">
-                            Download Sample File 
-                        </a>                        
-                        <a class="btn btn-danger pull-right btn-flat" href="{{ route('admin.contact.contact.index')}}">
+                        <a class="btn btn-danger pull-right btn-flat" href="{{ route('admin.contact.contacts.index')}}">
                             <i class="fa fa-times"></i> {{ trans('core::core.button.cancel') }}
                         </a>
                     </div>
@@ -66,7 +63,7 @@
         $( document ).ready(function() {
             $(document).keypressAction({
                 actions: [
-                    { key: 'b', route: "<?php echo route('admin.contact.contact.index') ?>" }
+                    { key: 'b', route: "<?php echo route('admin.contact.contacts.index') ?>" }
                 ]
             });
         });

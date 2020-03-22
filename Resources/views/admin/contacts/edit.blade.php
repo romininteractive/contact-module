@@ -6,7 +6,7 @@
     </h1>
     <ol class="breadcrumb">
         <li><a href="{{ route('dashboard.index') }}"><i class="fa fa-dashboard"></i> {{ trans('core::core.breadcrumb.home') }}</a></li>
-        <li><a href="{{ route('admin.contact.contact.index') }}">{{ trans('contact::contacts.title.contacts') }}</a></li>
+        <li><a href="{{ route('admin.contact.contacts.index') }}">{{ trans('contact::contacts.title.contacts') }}</a></li>
         <li class="active">{{ trans('contact::contacts.title.edit contact') }}</li>
     </ol>
 @stop
@@ -31,7 +31,7 @@
 
                     <div class="box-footer">
                         <button type="submit" class="btn btn-primary btn-flat">{{ trans('core::core.button.update') }}</button>
-                        <a class="btn btn-danger pull-right btn-flat" href="{{ route('admin.contact.contact.index')}}"><i class="fa fa-times"></i> {{ trans('core::core.button.cancel') }}</a>
+                        <a class="btn btn-danger pull-right btn-flat" href="{{ route('admin.contact.contacts.index')}}"><i class="fa fa-times"></i> {{ trans('core::core.button.cancel') }}</a>
                     </div>
                 </div>
             </div> {{-- end nav-tabs-custom --}}
@@ -61,7 +61,7 @@
         $( document ).ready(function() {
             $(document).keypressAction({
                 actions: [
-                    { key: 'b', route: "<?php echo route('admin.contact.contact.index') ?>" }
+                    { key: 'b', route: "<?php echo route('admin.contact.contacts.index') ?>" }
                 ]
             });
         });
