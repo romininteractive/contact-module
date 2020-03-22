@@ -37,7 +37,7 @@
                             {{ trans('contact::contacts.button.import') }}
                         </button>
                         &nbsp;&nbsp;&nbsp;
-                        <a class="btn btn-info btn-flat" href="{{ route('admin.contact.contact.samplefile')}}">
+                        <a class="btn btn-info btn-flat" href="{{ asset('modules/contact/sample-contact.csv')}}" download>
                             Download Sample File 
                         </a>                        
                         <a class="btn btn-danger pull-right btn-flat" href="{{ route('admin.contact.contact.index')}}">
