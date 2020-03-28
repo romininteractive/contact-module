@@ -44,6 +44,12 @@ class ContactImport implements WithHeadingRow, OnEachRow
         if (isset($row['city'])) {
             $address->city = $row['city'];
         }
+        if (isset($row['address'])) {
+            $address->address = $row['address'];
+        }
+        if (isset($row['zip_code'])) {
+            $address->zip_code = $row['zip_code'];
+        }
 
         $address->save();
     }

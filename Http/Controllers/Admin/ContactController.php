@@ -119,7 +119,7 @@ class ContactController extends AdminBaseController
 
         $messages = trans('core::core.messages.resource created', ['name' => trans('contact::contacts.title.contacts')]);
 
-        return redirect()->route('admin.contact.contact.index', ['type' => $contact->user_type])
+        return redirect()->route('admin.contact.contacts.index', ['type' => $contact->user_type])
             ->withSuccess($messages);
     }
 
@@ -203,7 +203,7 @@ class ContactController extends AdminBaseController
 
         $message = trans('core::core.messages.resource updated', ['name' => trans('contact::contacts.title.contacts')]);
 
-        return redirect()->route('admin.contact.contact.index', ['type' => $contact->user_type])
+        return redirect()->route('admin.contact.contacts.index', ['type' => $contact->user_type])
             ->withSuccess($message);
     }
 
