@@ -37,9 +37,10 @@
                             {{ trans('contact::contacts.button.import') }}
                         </button>
                         &nbsp;&nbsp;&nbsp;
-                        <a class="btn btn-danger pull-right btn-flat" href="{{ route('admin.contact.contacts.index')}}">
-                            <i class="fa fa-times"></i> {{ trans('core::core.button.cancel') }}
-                        </a>
+
+                        <a class="btn btn-info btn-flat" href="{{ asset('modules/contact/sample-contact.csv')}}" download>
+                            Download Sample File 
+                        </a>                        
                     </div>
                 </div>
             </div> {{-- end nav-tabs-custom --}}
