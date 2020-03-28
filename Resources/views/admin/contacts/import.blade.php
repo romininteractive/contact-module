@@ -38,9 +38,7 @@
                         </button>
                         &nbsp;&nbsp;&nbsp;
 
-                        <a class="btn btn-info btn-flat" href="{{ asset('modules/contact/sample-contact.csv')}}" download>
-                            Download Sample File 
-                        </a>                        
+                        <p><small>You can export the contacts to grab the sample file, and same file can be uploaded to import contacts you want to modify.</small></p>
                     </div>
                 </div>
             </div> {{-- end nav-tabs-custom --}}
