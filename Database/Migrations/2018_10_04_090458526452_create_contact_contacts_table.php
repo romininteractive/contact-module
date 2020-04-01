@@ -17,9 +17,9 @@ class CreateContactContactsTable extends Migration
             function (Blueprint $table) {
                 $table->engine = 'InnoDB';
                 $table->increments('id');
-                $table->string('salutation');
-                $table->string('first_name');
-                $table->string('last_name');
+                $table->string('salutation')->nullable();
+                $table->string('first_name')->nullable();
+                $table->string('last_name')->nullable();
                 $table->string('company_name');
                 $table->string('email');
                 $table->string('phone');

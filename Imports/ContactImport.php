@@ -27,6 +27,11 @@ class ContactImport implements WithHeadingRow, OnEachRow
             $contact = new Contact($row);
         }
 
+        // Set the default user type of not specified
+        if ($contact['user_tye'] != 'customer' && $contact['user_type'] != 'vendor') {
+            $contact['user_type'] = 'customer';
+        }
+
         $contact->save();
 
         if (!$contact->billingAddress()) {
