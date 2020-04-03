@@ -16,24 +16,51 @@
             <div class="clearfix"></div>
             <div class="col-sm-4">
                 {!! Form::label('salutation', 'Salutation') !!}
-                {!! Form::select('salutation', $salutations, null, ['class' => 'form-control', 'tabindex'=> '1'] ) !!}
-                <br/>
-                {!! Form::normalInput('first_name', 'First Name', $errors, '', ['tabindex'=> '2']) !!}
-                {!! Form::normalInput('last_name', 'Last Name', $errors, '', ['tabindex'=> '3']) !!}                
-
+                {!! Form::select('salutation', $salutations, null, ['class' => 'form-control'] ) !!}
             </div>
             <div class="col-sm-4">
-                {!! Form::normalInput('email', 'Email Address', $errors, '', ['tabindex'=> '4']) !!}
-                {!! Form::normalInput('phone', 'Phone Number', $errors, null, ['class' => 'form-control','maxlength' => 10, 'onkeypress' => 'return isNumber(event)','tabindex'=>  '5'] ) !!}
-                {!! Form::normalInput('company_name', 'Company Name', $errors, '', ['tabindex'=>    '6']) !!}
-
+                {!! Form::normalInput('first_name', 'First Name', $errors, '') !!}
             </div>
             <div class="col-sm-4">
-                {!! Form::normalInput('department', 'Department', $errors, '', ['tabindex'=> '7']) !!}                
-                {!! Form::normalInput('designation', 'Designation', $errors, '', ['tabindex'=> '8']) !!}
-                {!! Form::normalInput('gstin', 'GSTIN', $errors, '', ['tabindex'=> '9']) !!}
+                {!! Form::normalInput('last_name', 'Last Name', $errors, '') !!}
             </div>
         </fieldset>
+
+        <fieldset>
+            <legend>
+                Contact Details:
+            </legend>
+            <div class="col-md-4">
+                {!! Form::normalInput('phone', 'Mobile #1', $errors, '') !!}
+            </div>
+            <div class="col-md-4">
+                {!! Form::normalInput('mobile2', 'Mobile #2', $errors, '') !!}
+            </div>
+            <div class="col-sm-4">
+                {!! Form::normalInput('email', 'Email Address', $errors, '') !!}
+            </div>
+            
+            <div class="col-md-6">
+                {!! Form::normalInput('landline1', 'Landline #1', $errors, '') !!}
+            </div>
+            <div class="col-md-6">
+                {!! Form::normalInput('landline2', 'Landline #2', $errors, '') !!}
+            </div>
+        </fieldset>
+
+
+        <div class="col-sm-3">
+                {!! Form::normalInput('company_name', 'Company Name', $errors, '') !!}
+        </div>
+        <div class="col-sm-3">
+            {!! Form::normalInput('department', 'Department', $errors, '') !!}                
+        </div>
+        <div class="col-sm-3">
+            {!! Form::normalInput('designation', 'Designation', $errors, '') !!}
+        </div>
+        <div class="col-sm-3">
+            {!! Form::normalInput('gstin', 'GSTIN', $errors, '') !!}
+        </div>
     </div>
     @action('contact.top_field', null)
     <div class="row" style="margin-top: 10px;">
@@ -42,23 +69,22 @@
                 <legend>
                     Billing Details:
                 </legend>
-                {!! Form::normalInput('name', 'Name', $errors, '', ['tabindex'=> '10']) !!}
-                {!! Form::normalInput('address', 'Address', $errors, '', ['tabindex'=> '12']) !!}
+                {!! Form::normalInput('name', 'Name', $errors, '') !!}
+                {!! Form::normalInput('address', 'Address', $errors, '') !!}
+                
                 <div class='form-group'>
-                    {!! Form::label('country', 'Country') !!}
-                    <select name="country" class="form-control" id="country" tabindex="14">
-                    </select>
-                </div>                
-                <div class='form-group'>
-                    {!! Form::label('state', 'State') !!}
-                    <select name="state" class="form-control" id="state" tabindex="16">
-                    </select>
+                    {!! Form::label('location', 'Location') !!}
+                    <location-dropdown name="location"></location-dropdown>
                 </div>
-
-                {!! Form::normalInput('city', 'City', $errors, '', ['tabindex'=> '18']) !!}
-                {!! Form::normalInput('zip_code', 'Zip Code', $errors, null, ['class' => 'form-control','maxlength' => 6, 'onkeypress' => 'return isNumber(event)','tabindex'=> '20']) !!}
-                {!! Form::normalInput('fax', 'Fax', $errors, '', ['tabindex'=> '22']) !!}
-                {!! Form::normalInput('billingphone', 'Phone', $errors, null, ['class' => 'form-control','maxlength' => 10, 'onkeypress' => 'return isNumber(event)','tabindex'=> '24']) !!}
+                
+                <div class="row">
+                    <div class="col-sm-6">
+                        {!! Form::normalInput('fax', 'Fax', $errors, '') !!}
+                    </div>
+                    <div class="col-sm-6">
+                        {!! Form::normalInput('billingphone', 'Phone', $errors, null, ['class' => 'form-control','maxlength' => 10, 'onkeypress' => 'return isNumber(event)']) !!}
+                    </div>
+                </div>
             </fieldset>
         </div>
         @if(setting('contact::shipping_details'))
@@ -67,45 +93,19 @@
                 <legend>
                     Shipping Details:
                 </legend>
-                {!! Form::normalInput('sname', 'Name', $errors, '', ['tabindex'=> '11']) !!}
-                {!! Form::normalInput('saddress', 'Address', $errors, '', ['tabindex'=> '13']) !!}
-                {!! Form::normalInput('scountry', 'Country', $errors, '', ['tabindex'=> '15']) !!}
-                {!! Form::normalInput('sstate', 'State', $errors, '', ['tabindex'=> '17']) !!}
-                {!! Form::normalInput('scity', 'City', $errors, '', ['tabindex'=> '19']) !!}
-                {!! Form::normalInput('szip_code', 'Zip Code', $errors, null, ['class' => 'form-control','maxlength' => 6, 'onkeypress' => 'return isNumber(event)','tabindex'=> '21']) !!}
-                {!! Form::normalInput('sfax', 'Fax', $errors, '', ['tabindex'=> '23']) !!}
-                {!! Form::normalInput('sbillingphone', 'Phone', $errors, null, ['class' => 'form-control','maxlength' => 10, 'onkeypress' => 'return isNumber(event)','tabindex'=> '25']) !!}
+                {!! Form::normalInput('sname', 'Name', $errors, '') !!}
+                {!! Form::normalInput('saddress', 'Address', $errors, '') !!}
+                {!! Form::normalInput('scountry', 'Country', $errors, '') !!}
+                {!! Form::normalInput('sstate', 'State', $errors, '') !!}
+                {!! Form::normalInput('scity', 'City', $errors, '') !!}
+                {!! Form::normalInput('szip_code', 'Zip Code', $errors, null, ['class' => 'form-control','maxlength' => 6, 'onkeypress' => 'return isNumber(event)']) !!}
+                {!! Form::normalInput('sfax', 'Fax', $errors, '') !!}
+                {!! Form::normalInput('sbillingphone', 'Phone', $errors, null, ['class' => 'form-control','maxlength' => 10, 'onkeypress' => 'return isNumber(event)']) !!}
             </fieldset>
         </div>
         @endif
     </div>
 
-    <div class="row" style="margin-top: 10px;">
-        <div class="col-md-6">
-            <fieldset>
-                <legend>
-                    Contact Details:
-                </legend>
-            </fieldset>
-            <div class="row">
-                <div class="col-md-6">
-                    {!! Form::normalInput('landline1', 'Landline #1', $errors, '', ['tabindex'=> '31']) !!}
-                </div>
-                <div class="col-md-6">
-                    {!! Form::normalInput('landline2', 'Landline #2', $errors, '', ['tabindex'=> '32']) !!}
-                </div>
-            </div>
-
-            <div class="row">
-                <div class="col-md-6">
-                    {!! Form::normalInput('mobile1', 'Mobile #1', $errors, '', ['tabindex'=> '33']) !!}
-                </div>
-                <div class="col-md-6">
-                    {!! Form::normalInput('mobile2', 'Mobile #2', $errors, '', ['tabindex'=> '34']) !!}
-                </div>
-            </div>
-        </div>
-    </div>
     <div class="row" style="margin-top: 10px;">
         <div class="col-md-6">
             <fieldset>
