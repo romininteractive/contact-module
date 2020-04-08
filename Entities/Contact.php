@@ -125,6 +125,11 @@ class Contact extends Model implements ContactInterface
         return $this->hasMany(Estimate::class);
     }
 
+    public function setUserTypeAttribute($value)
+    {
+        $this->attributes['user_type'] = strtolower($value);
+    }
+
     public static function fieldValues($type)
     {
         $contacts = self::whereUserType($type)->get();
