@@ -97,7 +97,18 @@ class Contact extends Model implements ContactInterface
 
     public function mobileNo()
     {
-        return $this->phone;
+        if($this->phone != ''){
+            return $this->phone;
+        }
+
+        if($this->mobile1 != ''){
+            return $this->mobile1;
+        }
+        if($this->mobile2 != ''){
+            return $this->mobile2;
+        }
+
+        return null;
     }
     /**
      * Return the user's email address
