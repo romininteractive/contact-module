@@ -15,9 +15,10 @@ use Modules\Estimate\Entities\Estimate;
 use Modules\Newnotification\Entities\Newnotification;
 use Modules\Purchases\Entities\Purchases;
 use Modules\Quotation\Entities\Quote;
+use Modules\Rarv\Contracts\SMSable;
 use Modules\Reminder\Entities\Reminder;
 
-class Contact extends Model implements ContactInterface
+class Contact extends Model implements ContactInterface, SMSable
 {
     use SoftDeletes, Notifiable, Translatable;
 
@@ -93,6 +94,11 @@ class Contact extends Model implements ContactInterface
     public function getName()
     {
         return $this->full_name;
+    }
+
+    public function getMobileNo():string
+    {
+        return $this->mobileNo();
     }
 
     public function mobileNo()
