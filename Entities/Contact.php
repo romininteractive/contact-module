@@ -15,10 +15,11 @@ use Modules\Estimate\Entities\Estimate;
 use Modules\Newnotification\Entities\Newnotification;
 use Modules\Purchases\Entities\Purchases;
 use Modules\Quotation\Entities\Quote;
+use Modules\Rarv\Contracts\CanBePrintedOnCover;
 use Modules\Rarv\Contracts\SMSable;
 use Modules\Reminder\Entities\Reminder;
 
-class Contact extends Model implements ContactInterface, SMSable
+class Contact extends Model implements ContactInterface, SMSable, CanBePrintedOnCover
 {
     use SoftDeletes, Notifiable, Translatable;
 
@@ -96,21 +97,21 @@ class Contact extends Model implements ContactInterface, SMSable
         return $this->full_name;
     }
 
-    public function getMobileNo():string
+    public function getMobileNo(): string
     {
         return $this->mobileNo();
     }
 
     public function mobileNo()
     {
-        if($this->phone != ''){
+        if ($this->phone != '') {
             return $this->phone;
         }
 
-        if($this->mobile1 != ''){
+        if ($this->mobile1 != '') {
             return $this->mobile1;
         }
-        if($this->mobile2 != ''){
+        if ($this->mobile2 != '') {
             return $this->mobile2;
         }
 
@@ -258,6 +259,17 @@ class Contact extends Model implements ContactInterface, SMSable
         $address->save();
 
         return $address;
+    }
+
+    public function coverText(): string
+    {
+        $address = $this->billingAddress();
+
+        return "To, <Br/>
+            ".$this->full_name.",<br/>
+            ".$address->address.",<br/>
+            ".$address->city." - ".$address->zip_code.", <br/>
+            ".$address->state.", ".$address->country."<br/>";
     }
 
     /**
