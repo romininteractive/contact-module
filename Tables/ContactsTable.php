@@ -22,6 +22,8 @@ class ContactsTable extends Table
 
     protected $exportable = true;
 
+    protected $massDeletable = true;
+
     public function __construct($module)
     {
         parent::__construct($module);

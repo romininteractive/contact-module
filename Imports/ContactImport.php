@@ -14,6 +14,8 @@ class ContactImport implements WithHeadingRow, OnEachRow
         $contact = null;
         $row = $row->toArray();
 
+        unset($row['type']);
+
         if (isset($row['updated_at'])) {
             unset($row['updated_at']);
         }
@@ -27,13 +29,22 @@ class ContactImport implements WithHeadingRow, OnEachRow
             $contact = new Contact($row);
         }
 
+        // Set the default user type of not specified
+        if (strtolower($contact['user_tye']) != 'customer' && strtolower($contact['user_type']) != 'vendor') {
+            $contact['user_type'] = 'customer';
+        }
+
+        $contact->phone = $contact['mobile1'];
         $contact->save();
 
         if (!$contact->billingAddress()) {
             $contact->createAddress();
         }
 
+
         $address = $contact->billingAddress();
+
+        $address->billingphone = $contact['phone'];
 
         if (isset($row['country'])) {
             $address->country = $row['country'];
@@ -43,6 +54,12 @@ class ContactImport implements WithHeadingRow, OnEachRow
         }
         if (isset($row['city'])) {
             $address->city = $row['city'];
+        }
+        if (isset($row['address'])) {
+            $address->address = $row['address'];
+        }
+        if (isset($row['zip_code'])) {
+            $address->zip_code = $row['zip_code'];
         }
 
         $address->save();

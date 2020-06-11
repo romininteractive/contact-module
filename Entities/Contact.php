@@ -15,9 +15,11 @@ use Modules\Estimate\Entities\Estimate;
 use Modules\Newnotification\Entities\Newnotification;
 use Modules\Purchases\Entities\Purchases;
 use Modules\Quotation\Entities\Quote;
+use Modules\Rarv\Contracts\CanBePrintedOnCover;
+use Modules\Rarv\Contracts\SMSable;
 use Modules\Reminder\Entities\Reminder;
 
-class Contact extends Model implements ContactInterface
+class Contact extends Model implements ContactInterface, SMSable, CanBePrintedOnCover
 {
     use SoftDeletes, Notifiable, Translatable;
 
@@ -95,9 +97,25 @@ class Contact extends Model implements ContactInterface
         return $this->full_name;
     }
 
+    public function getMobileNo(): string
+    {
+        return $this->mobileNo();
+    }
+
     public function mobileNo()
     {
-        return $this->phone;
+        if ($this->phone != '') {
+            return $this->phone;
+        }
+
+        if ($this->mobile1 != '') {
+            return $this->mobile1;
+        }
+        if ($this->mobile2 != '') {
+            return $this->mobile2;
+        }
+
+        return null;
     }
     /**
      * Return the user's email address
@@ -123,6 +141,11 @@ class Contact extends Model implements ContactInterface
     public function estimate()
     {
         return $this->hasMany(Estimate::class);
+    }
+
+    public function setUserTypeAttribute($value)
+    {
+        $this->attributes['user_type'] = strtolower($value);
     }
 
     public static function fieldValues($type)
@@ -236,6 +259,17 @@ class Contact extends Model implements ContactInterface
         $address->save();
 
         return $address;
+    }
+
+    public function coverText(): string
+    {
+        $address = $this->billingAddress();
+
+        return "To, <Br/>
+            ".$this->full_name.",<br/>
+            ".$address->address.",<br/>
+            ".$address->city." - ".$address->zip_code.", <br/>
+            ".$address->state.", ".$address->country."<br/>";
     }
 
     /**
