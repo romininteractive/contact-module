@@ -16,7 +16,7 @@ return [
         'import'        => 'Import',
     ],
     'button'           => [
-        'create contact' => 'Create a contact',
+        'create contact' => 'Add Contact',
         'import' => 'Import Now',
     ],
     'table'            => [

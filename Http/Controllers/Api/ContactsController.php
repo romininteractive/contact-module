@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Modules\Contact\Entities\Contact;
 use Modules\Contact\Entities\ContactAddress;
+use Modules\Contact\Http\Requests\CreateContactRequest;
 use Modules\Contact\Repositories\ContactRepository;
 
 /**
@@ -38,7 +39,7 @@ class ContactsController extends Controller
         return $this->contactsRepo->find($id);
     }
 
-    public function store(request $request)
+    public function store(CreateContactRequest $request)
     {
         $city = ($request->has('city'))?$request->get('city'):'';
         $input =$request->except(['city']);

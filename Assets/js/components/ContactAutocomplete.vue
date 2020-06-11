@@ -1,6 +1,6 @@
 <template>
 <el-row class="demo-autocomplete">
-  <el-col :span="10">
+  <el-col :span="15">
     <el-autocomplete
       class="inline-input"
       v-model="state2"
@@ -14,7 +14,8 @@
     ></el-autocomplete>
     <input type="hidden" name="customer_id" v-model="selected_customer" />
   </el-col>
-  <el-col :span="2">
+  &nbsp;&nbsp;
+  <el-col :span="3">
     <add-contact parent-id="first_name" :user_type="user_type"></add-contact>           
   </el-col>  
 </el-row>

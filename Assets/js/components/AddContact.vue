@@ -2,8 +2,9 @@
     <div>
         <el-button type="success" size="small" class="new-folder" @click="dialogFormVisible = true" icon="el-icon-plus">
         </el-button>
-        <el-dialog :title="trans('Create Contact')" :visible.sync="dialogFormVisible" width="30%" >
+        <el-dialog :title="trans('Add Contact')" :visible.sync="dialogFormVisible" width="40%" >
             <el-form :model="contact" :rules="rules" ref="ruleForm" v-loading.body="loading" @submit.native.prevent="onSubmit()" class="demo-ruleForm">
+                <form-errors :form="form"></form-errors>
                 <el-row>
                     <el-col :span="12">                
                         <el-form-item :label="trans('First Name')" :class="{'el-form-item is-error': form.errors.has('first_name') }" prop="first_name">
@@ -11,7 +12,7 @@
                             <div class="el-form-item__error" v-if="form.errors.has('first_name')"
                                  v-text="form.errors.first('first_name')"></div>
                         </el-form-item>
-                    </el-col>    
+                    </el-col>  
                     <el-col :span="12">
                         <el-form-item :label="trans('Last Name')" :class="{'el-form-item is-error': form.errors.has('last_name') }" prop="last_name">
                             <el-input v-model="contact.last_name"  name="last_name" auto-complete="off" autofocus></el-input>
@@ -73,13 +74,15 @@
 
 <script>
     import Form from 'form-backend-validation';
-
+    import FormErrors from '../../../../Contact/Assets/js/components/FormErrors.vue';
     export default {
+        components: { FormErrors },        
         props: ['user_type'],
         data() {
             return {
                 dialogFormVisible: false,
                 contact: {
+                    salutation: 'mr',
                     first_name: '',
                     last_name: '',                    
                     phone: '',
@@ -154,5 +157,8 @@
     .new-folder {
         float: left;
         margin-right: 10px;
+    }
+    .el-form-item{
+        padding-left: 10px;
     }
 </style>
